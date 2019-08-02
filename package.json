@@ -1,0 +1,18 @@
+{
+  "name": "deck",
+  "version": "0.1.0",
+  "description": "Notes application",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Specter",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

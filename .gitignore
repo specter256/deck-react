@@ -1,0 +1,14 @@
+/node_modules
+/build
+
+/client/node_modules
+/client/build
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+
+/server/node_modules
+/server/build
+/server/npm-debug.log*
+/server/yarn-debug.log*
+/server/yarn-error.log*

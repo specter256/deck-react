@@ -1,0 +1,41 @@
+nav {
+  height: 100vh;
+  background-color: var(--b_medium);
+  -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+nav .links ul {
+  margin: 0;
+  padding: 5px 20px;
+}
+
+nav .links li {
+  list-style-type: none;
+  font-size: 24px;
+  color: var(--f_dark);
+  padding: 4px 0;
+
+  &:hover svg {
+    color: var(--f_medium);
+  }
+
+  &:hover button {
+    color: var(--f_medium);
+    background-color: var(--b_light);
+  }
+}
+
+nav .links li svg {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+nav .links li button {
+  vertical-align: middle;
+}
