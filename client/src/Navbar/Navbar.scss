@@ -10,12 +10,12 @@ nav {
   user-select: none;
 }
 
-nav .links ul {
+.nav-links ul {
   margin: 0;
   padding: 5px 20px;
 }
 
-nav .links li {
+.nav-links li {
   list-style-type: none;
   font-size: 24px;
   color: var(--f_dark);
@@ -31,11 +31,19 @@ nav .links li {
   }
 }
 
-nav .links li svg {
+.nav-links li svg {
   vertical-align: middle;
   margin-right: 6px;
 }
 
-nav .links li button {
+.nav-links li button {
   vertical-align: middle;
+}
+
+.nav-notes {
+  overflow: auto;
+  height: 100%;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0 !important }
 }

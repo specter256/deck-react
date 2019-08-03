@@ -43,14 +43,18 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
   render() {
     return (
       <nav>
-        <SplitPane split="horizontal" minSize={250} defaultSize={250}>
-          <div className="links">
+        <SplitPane
+          split="horizontal"
+          minSize={250}
+          defaultSize={250}
+          pane2Style={{ overflow: 'hidden' }}>
+          <div className="nav-links">
             <ul>
               <li><MdNote/><button onClick={() => this.fetchNotes()}>Notes</button></li>
               <li><MdImage/><button onClick={() => this.fetchImages()}>Images</button></li>
             </ul>
           </div>
-          <div>
+          <div className="nav-notes">
             <NoteList notes={this.state.notes}/>
           </div>
         </SplitPane>
