@@ -6,10 +6,19 @@ import * as themes from '../utils/themes';
 import Navbar from '../Navbar/Navbar';
 import NoteContent from '../NoteContent/NoteContent';
 
-export default class Deck extends React.Component {
+interface DeckProps {
+}
+
+interface DeckState {
+}
+
+export default class Deck extends React.Component<DeckProps, DeckState> {
   constructor(props: any) {
     super(props);
     themes.init();
+  }
+
+  saveHandler() {
   }
 
   render() {
@@ -21,7 +30,7 @@ export default class Deck extends React.Component {
           defaultSize={250}
           resizerStyle={{ background: 'none' }}>
           <Navbar/>
-          <NoteContent/>
+          <NoteContent onSave={this.saveHandler}/>
         </SplitPane>
       </div>
     );
