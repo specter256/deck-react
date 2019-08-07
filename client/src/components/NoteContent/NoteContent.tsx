@@ -1,13 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import { MdSave } from 'react-icons/md';
+
 import './NoteContent.scss';
 
-interface NoteContentProps {
-  onSave: any;
+type NoteContentProps = {
+  fetchNotes: () => Promise<void>;
 }
 
-interface NoteContentState {
+type NoteContentState = {
   value: string;
 }
 
@@ -28,17 +28,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   }
 
   handleSubmit(event: any) {
-    axios.post('api/notes/add', {
-        text: this.state.value,
-      })
-      .then(response => {
-        this.props.onSave();
-      })
-      .catch(error => {
-        console.log('error:', error);
-      });
-
     event.preventDefault();
+    this.props.fetchNotes();
   }
 
   render() {

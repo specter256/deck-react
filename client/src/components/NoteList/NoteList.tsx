@@ -1,19 +1,21 @@
 import React from 'react';
 
-import NoteItem from '../NoteItem/NoteItem';
-import './NoteList.scss';
+import NoteItem from 'components/NoteItem/NoteItem';
 
-interface NoteListProps {
-  notes: any;
+import './NoteList.scss';
+import { Note } from 'interfaces/interfaces';
+
+type NoteListProps = {
+  notes: Note[];
 }
 
-interface NoteListState {
+type NoteListState = {
 }
 
 export default class NoteList extends React.Component<NoteListProps, NoteListState> {
   render() {
     return (
-      this.props.notes.map((note: any, index: number) => {
+      this.props.notes.map((note: Note, index: number) => {
         return <NoteItem data={note} key={index}/>
       })
     );

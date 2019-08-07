@@ -1,11 +1,12 @@
 import React from 'react';
+
 import './NoteItem.scss';
 
-interface NoteItemProps {
+type NoteItemProps = {
   data: any;
 }
 
-interface NoteItemState {
+type NoteItemState = {
 }
 
 export default class NoteItem  extends React.Component<NoteItemProps, NoteItemState> {

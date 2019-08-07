@@ -1,46 +1,39 @@
 import React from 'react';
-import axios from 'axios';
-
-import './Navbar.scss';
-import NoteList from '../NoteList/NoteList';
 import SplitPane from 'react-split-pane';
 import { MdNote, MdImage } from "react-icons/md";
 
-interface NavbarProps {
+import { Note } from 'interfaces/interfaces';
+import NoteList from 'components/NoteList/NoteList';
+
+import './Navbar.scss';
+
+type NavbarProps = {
+  fetchNotes: () => Promise<void>;
+  loading: boolean;
+  notes: Note[];
 }
 
-interface NavbarState {
-  notes: any;
+type NavbarState = {
 }
 
 export default class NavBar extends React.Component<NavbarProps, NavbarState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      notes: []
-    }
-
-    this.fetchNotes();
-  }
-
   fetchNotes = () => {
-    var that = this;
-
-    axios.get('api/notes')
-      .then(response => {
-        that.setState({
-          notes: response.data
-        });
-      })
-      .catch(error => {
-        console.log('error:', error);
-      });
+    this.props.fetchNotes();
   }
 
-  fetchImages = () => {}
+  fetchImages = () => {
+  }
 
   render() {
+    const { loading, notes } = this.props;
+    let navNotes;
+
+    if (loading) {
+      navNotes = <div style={{ padding: '10px' }}>Loading...</div>;
+    } else {
+      navNotes = <NoteList notes={notes}/>;
+    }
+
     return (
       <nav>
         <SplitPane
@@ -55,7 +48,7 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
             </ul>
           </div>
           <div className="nav-notes">
-            <NoteList notes={this.state.notes}/>
+            { navNotes }
           </div>
         </SplitPane>
       </nav>
