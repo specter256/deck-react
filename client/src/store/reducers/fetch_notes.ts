@@ -2,7 +2,7 @@ import {
   FETCH_NOTES_BEGIN,
   FETCH_NOTES_SUCCESS,
   FETCH_NOTES_FAILURE
-} from 'store/actions/notes';
+} from 'store/actions/fetch_notes';
 
 const initialState = {
   items: [],
@@ -10,7 +10,7 @@ const initialState = {
   error: null
 };
 
-export const notes = (state = initialState, action: any) => {
+export const fetchNotes = (state = initialState, action: any) => {
   switch(action.type) {
     case FETCH_NOTES_BEGIN:
       return {

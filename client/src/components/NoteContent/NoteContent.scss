@@ -1,8 +1,9 @@
 #editor-content-wrap {
+  height: 100%;
 }
 
 #editor-content {
-  padding: 10px
+  height: 100%;
 }
 
 #editor-content input {
@@ -23,7 +24,6 @@
 #editor-content button {
   padding: 10px;
   font-size: 24px;
-  margin-left: 10px;
   background-color: var(--b_medium);
   border: none;
   outline: none;
@@ -40,6 +40,10 @@
   background-color: var(--b_medium);
 }
 
+#editor-content form {
+  height: 100%;
+}
+
 textarea {
   margin-top: 10px;
   width: 100%;
@@ -51,7 +55,7 @@ textarea {
   background-color: var(--b_dark);
   color: var(--f_medium);
   border: none;
-  height: calc(100vh - 80px);
+  height: 100%;
 }
 
 ::-webkit-scrollbar {

@@ -1,9 +1,12 @@
 import React from 'react';
-import { MdSave } from 'react-icons/md';
+import SplitPane from 'react-split-pane';
+
+import ControlBar from 'components/ControlBar/ControlBar';
 
 import './NoteContent.scss';
 
 type NoteContentProps = {
+  saveNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<void>;
 }
 
@@ -20,32 +23,45 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.saveNote = this.saveNote.bind(this);
+  }
+
+  saveNote() {
+    const data = {
+      text: this.state.value,
+    };
+    this.props.saveNote(data).then((res) => {
+      if (res.status === 200) {
+        this.props.fetchNotes();
+      }
+    });
   }
 
   handleChange(event: any) {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event: any) {
-    event.preventDefault();
-    this.props.fetchNotes();
-  }
-
   render() {
     return (
       <div id="editor-content-wrap">
         <section id="editor-content">
-          <form onSubmit={this.handleSubmit}>
-            <button type="submit"><MdSave/></button>
-            <div className="input-container">
-              <input placeholder="Enter title"/>
+          <SplitPane
+            split="horizontal"
+            allowResize={false}
+            minSize={75}
+            defaultSize={75}>
+            <ControlBar
+              saveNote={this.saveNote}/>
+            <div style={{ height: '100%' }}>
+              <div className="input-container">
+                <input placeholder="Enter title"/>
+              </div>
+              <textarea
+                value={this.state.value}
+                onChange={this.handleChange}>
+              </textarea>
             </div>
-            <textarea
-              value={this.state.value}
-              onChange={this.handleChange}>
-            </textarea>
-          </form>
+          </SplitPane>
         </section>
       </div>
     );

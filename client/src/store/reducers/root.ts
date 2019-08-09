@@ -2,10 +2,12 @@ import {
   combineReducers,
 } from 'redux';
 
-import { notes } from 'store/reducers/notes';
+import { fetchNotes } from 'store/reducers/fetch_notes';
+import { saveNote } from 'store/reducers/save_note';
 
 export const rootReducer = combineReducers({
-  notes,
+  fetchNotes,
+  saveNote,
 });
 
 export type AppState = ReturnType<typeof rootReducer>
