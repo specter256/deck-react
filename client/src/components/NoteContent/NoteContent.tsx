@@ -30,11 +30,12 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     const data = {
       text: this.state.value,
     };
-    this.props.saveNote(data).then((res) => {
-      if (res.status === 200) {
-        this.props.fetchNotes();
-      }
-    });
+    this.props.saveNote(data)
+      .then((res) => {
+        if (res.status === 200) {
+          this.props.fetchNotes();
+        }
+      });
   }
 
   handleChange(event: any) {
@@ -49,7 +50,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             split="horizontal"
             allowResize={false}
             minSize={75}
-            defaultSize={75}>
+            defaultSize={75}
+            resizerStyle={{ background: 'none' }}>
             <ControlBar
               saveNote={this.saveNote}/>
             <div style={{ height: '100%' }}>

@@ -36,6 +36,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
           split="vertical"
           minSize={250}
           defaultSize={250}
+          allowResize={false}
           resizerStyle={{ background: 'none' }}>
           <Navbar
             notes={this.props.notes}

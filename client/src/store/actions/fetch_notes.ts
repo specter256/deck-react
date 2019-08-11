@@ -27,23 +27,23 @@ function handleErrors(response: any) {
   return response;
 }
 
-const getNotes = () => {
-  return axios.get('api/notes')
-    .then(handleErrors)
-    .then(res => res.data);
+const getNotes = async () => {
+  const response = await axios.get('api/notes');
+  const res = await handleErrors(response);
+  return res.data;
 }
 
 export function fetchNotes() {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(fetchNotesBegin());
 
-    return getNotes()
-      .then(data => {
-        dispatch(fetchNotesSuccess(data));
-        return data;
-      })
-      .catch(error => {
-        dispatch(fetchNotesFailure(error))
-      });
+    try {
+      const data = await getNotes();
+      dispatch(fetchNotesSuccess(data));
+      return data;
+    }
+    catch (error) {
+      dispatch(fetchNotesFailure(error));
+    }
   };
 }

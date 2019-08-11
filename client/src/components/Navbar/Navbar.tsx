@@ -26,13 +26,6 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
 
   render() {
     const { loading, notes } = this.props;
-    let navNotes;
-
-    if (loading) {
-      navNotes = <div style={{ padding: '10px' }}>Loading...</div>;
-    } else {
-      navNotes = <NoteList notes={notes}/>;
-    }
 
     return (
       <nav>
@@ -40,7 +33,8 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
           split="horizontal"
           minSize={250}
           defaultSize={250}
-          pane2Style={{ overflow: 'hidden' }}>
+          pane2Style={{ overflow: 'hidden' }}
+          resizerStyle={{ background: 'none' }}>
           <div className="nav-links">
             <ul>
               <li><MdNote/><button onClick={() => this.fetchNotes()}>Notes</button></li>
@@ -48,7 +42,7 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
             </ul>
           </div>
           <div className="nav-notes">
-            { navNotes }
+            <NoteList notes={notes}/>
           </div>
         </SplitPane>
       </nav>

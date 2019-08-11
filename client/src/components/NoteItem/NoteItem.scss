@@ -1,7 +1,8 @@
 .item-container {
   height: 120px;
+  display: flex;
   border-bottom: 1px solid var(--b_light);
-  padding: 5px 20px;
+  padding: 5px 0px 5px 20px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -11,10 +12,30 @@
   &:hover {
     cursor: pointer;
     background-color: var(--b_dark);
-    -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
-    box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+    // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+    // -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+    // box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
     opacity: 1;
+  }
+
+  &:hover .item-right-col {
+    visibility: visible;
+  }
+}
+
+.item-left-col {
+  flex: 1;
+}
+
+.item-right-col {
+  width: 20px;
+  font-size: 20px;
+  color: var(--f_dark);
+  padding-right: 2px;
+  visibility: hidden;
+
+  svg:hover {
+    color: var(--accent_1);
   }
 }
 

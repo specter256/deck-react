@@ -27,23 +27,24 @@ function handleErrors(response: any) {
   return response;
 }
 
-const save = (data: any) => {
-  return axios.post('api/notes/add', data)
-    .then(handleErrors)
-    .then(res => res.data);
+const save = async (data: any) => {
+  const response = await axios.post('api/notes/add', data);
+  const res = await handleErrors(response);
+  return res.data;
 }
 
 export function saveNote(data: any) {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
+    console.log(dispatch);
     dispatch(saveNoteBegin());
 
-    return save(data)
-      .then(res => {
-        dispatch(saveNoteSuccess(res));
-        return res;
-      })
-      .catch(error => {
-        dispatch(saveNoteFailure(error))
-      });
+    try {
+      const res = await save(data);
+      dispatch(saveNoteSuccess(res));
+      return res;
+    }
+    catch (error) {
+      dispatch(saveNoteFailure(error));
+    }
   };
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import FlipMove from 'react-flip-move';
 
 import NoteItem from 'components/NoteItem/NoteItem';
 
@@ -15,9 +16,11 @@ type NoteListState = {
 export default class NoteList extends React.Component<NoteListProps, NoteListState> {
   render() {
     return (
-      this.props.notes.map((note: Note, index: number) => {
-        return <NoteItem data={note} key={index}/>
-      })
+      <FlipMove duration={150} easing="ease-out">
+        {this.props.notes.map((note: Note, index: number) => (
+          <NoteItem data={note} key={index}/>
+        ))}
+      </FlipMove>
     );
   }
 }
