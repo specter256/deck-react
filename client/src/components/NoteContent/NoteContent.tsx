@@ -5,6 +5,9 @@ import ControlBar from 'components/ControlBar/ControlBar';
 
 import './NoteContent.scss';
 
+const MarkdownIt = require('markdown-it');
+const md = new MarkdownIt();
+
 type NoteContentProps = {
   saveNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<void>;
@@ -12,6 +15,7 @@ type NoteContentProps = {
 
 type NoteContentState = {
   value: string;
+  markdown: string;
 }
 
 export default class NoteContent extends React.Component<NoteContentProps, NoteContentState> {
@@ -19,7 +23,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      markdown: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -39,7 +44,14 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   }
 
   handleChange(event: any) {
-    this.setState({value: event.target.value});
+    this.setState({
+      value: event.target.value,
+      markdown: md.render(event.target.value)
+    });
+  }
+
+  createMarkdown() {
+    return {__html: this.state.markdown};
   }
 
   render() {
@@ -55,13 +67,17 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             <ControlBar
               saveNote={this.saveNote}/>
             <div style={{ height: '100%' }}>
-              <div className="input-container">
-                <input placeholder="Enter title"/>
-              </div>
-              <textarea
-                value={this.state.value}
-                onChange={this.handleChange}>
-              </textarea>
+              <SplitPane
+                split="vertical"
+                allowResize={false}
+                defaultSize="50%"
+                resizerStyle={{ background: 'none' }}>
+                <textarea
+                  value={this.state.value}
+                  onChange={this.handleChange}>
+                </textarea>
+                <div dangerouslySetInnerHTML={this.createMarkdown()}></div>
+              </SplitPane>
             </div>
           </SplitPane>
         </section>
