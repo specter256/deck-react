@@ -4,6 +4,8 @@ import { MdCheck, MdClose, MdDelete } from "react-icons/md";
 import './NoteItem.scss';
 
 type NoteItemProps = {
+  fetchNotes: () => Promise<void>;
+  delNote: (id: number) => void;
   data: any;
 }
 
@@ -21,6 +23,12 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
 
     this.onShowDelConfirm = this.onShowDelConfirm.bind(this);
     this.onHideDelConfirm = this.onHideDelConfirm.bind(this);
+    this.onDelNote = this.onDelNote.bind(this);
+  }
+
+  onDelNote() {
+    this.props.delNote(this.props.data.id);
+    this.setState({ showDelConfirm: false });
   }
 
   onShowDelConfirm() {
@@ -31,10 +39,6 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
     this.setState({ showDelConfirm: false });
   }
 
-  onDelNote() {
-
-  }
-
   render() {
     const delIcon =
       <div className="item-del">
@@ -43,7 +47,7 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
 
     const delConfirmIcons =
       <div className="item-del-confirm">
-        <MdCheck onclick={this.onDelNote}/>
+        <MdCheck onClick={this.onDelNote}/>
         <MdClose onClick={this.onHideDelConfirm}/>
       </div>
 

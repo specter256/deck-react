@@ -30,6 +30,18 @@ router.post('/add', async (req, res) => {
   res.json({status:200});
 });
 
+router.delete('/del', async (req, res) => {
+  const data = req.body;
+
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Note)
+    .where('id = :id', { id: data.id })
+    .execute();
+
+  res.json({status:200});
+});
 const getCurrentDate = () => {
   const currentDate = new Date();
   let year = currentDate.getFullYear();

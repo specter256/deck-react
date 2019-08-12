@@ -8,6 +8,7 @@ import Navbar from 'components/Navbar/Navbar';
 import NoteContent from 'components/NoteContent/NoteContent';
 import { fetchNotes } from 'store/actions/fetch_notes';
 import { saveNote } from 'store/actions/save_note';
+import { delNote } from 'store/actions/del_note';
 import { AppState } from 'store/reducers/root';
 
 import './Deck.scss';
@@ -15,6 +16,7 @@ import './Deck.scss';
 type DeckProps = {
   fetchNotes: () => Promise<void>;
   saveNote: () => Promise<void>;
+  delNote: () => Promise<void>;
   loading: boolean;
   notes: Note[];
 }
@@ -41,7 +43,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
           <Navbar
             notes={this.props.notes}
             loading={this.props.loading}
-            fetchNotes={this.props.fetchNotes}/>
+            fetchNotes={this.props.fetchNotes}
+            delNote={this.props.delNote}/>
           <NoteContent
             saveNote={this.props.saveNote}
             fetchNotes={this.props.fetchNotes}/>
@@ -60,6 +63,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = {
   fetchNotes,
   saveNote,
+  delNote,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);
