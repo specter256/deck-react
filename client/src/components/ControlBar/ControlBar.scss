@@ -1,3 +1,28 @@
 .control-bar {
   padding: 10px;
 }
+
+.control-bar button {
+  padding: 10px;
+  background-color: var(--b_medium);
+  border: none;
+  outline: none;
+  color: var(--f_dark);
+  float: left;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.control-bar button svg {
+  font-size: 24px;
+}
+
+.control-bar button:hover {
+  background-color: var(--b_light);
+  color: var(--f_medium);
+  cursor: pointer;
+}
+
+.control-bar button:active {
+  background-color: var(--b_medium);
+}

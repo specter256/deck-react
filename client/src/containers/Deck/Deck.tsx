@@ -7,17 +7,24 @@ import * as themes from 'utils/themes';
 import Navbar from 'components/Navbar/Navbar';
 import NoteContent from 'components/NoteContent/NoteContent';
 import { fetchNotes } from 'store/actions/fetch_notes';
-import { saveNote } from 'store/actions/save_note';
+import { fetchNote } from 'store/actions/fetch_note';
+import { addNote } from 'store/actions/add_note';
+import { updNote } from 'store/actions/upd_note';
 import { delNote } from 'store/actions/del_note';
+import { toggleEditMode } from 'store/actions/common';
 import { AppState } from 'store/reducers/root';
 
 import './Deck.scss';
 
 type DeckProps = {
   fetchNotes: () => Promise<void>;
-  saveNote: () => Promise<void>;
+  fetchNote: () => Promise<void>;
+  addNote: () => Promise<void>;
+  updNote: () => Promise<void>;
   delNote: () => Promise<void>;
-  loading: boolean;
+  toggleEditMode: () => void;
+  editMode: boolean;
+  selectedNote: Note;
   notes: Note[];
 }
 
@@ -42,12 +49,17 @@ class Deck extends React.Component<DeckProps, DeckState> {
           resizerStyle={{ background: 'none' }}>
           <Navbar
             notes={this.props.notes}
-            loading={this.props.loading}
+            selectedNote={this.props.selectedNote}
             fetchNotes={this.props.fetchNotes}
+            fetchNote={this.props.fetchNote}
             delNote={this.props.delNote}/>
           <NoteContent
-            saveNote={this.props.saveNote}
-            fetchNotes={this.props.fetchNotes}/>
+            toggleEditMode={this.props.toggleEditMode}
+            selectedNote={this.props.selectedNote}
+            fetchNotes={this.props.fetchNotes}
+            addNote={this.props.addNote}
+            updNote={this.props.updNote}
+            editMode={this.props.editMode}/>
         </SplitPane>
       </div>
     );
@@ -56,14 +68,17 @@ class Deck extends React.Component<DeckProps, DeckState> {
 
 const mapStateToProps = (state: AppState) => ({
   notes: state.fetchNotes.items,
-  loading: state.fetchNotes.loading,
-  error: state.fetchNotes.error
+  editMode: state.common.editMode,
+  selectedNote: state.fetchNote.data,
 });
 
 const mapDispatchToProps = {
   fetchNotes,
-  saveNote,
+  fetchNote,
+  addNote,
+  updNote,
   delNote,
+  toggleEditMode,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);

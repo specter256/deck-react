@@ -9,7 +9,7 @@
   user-select: none;
   opacity: .5;
 
-  &:hover {
+  &:hover, &.selected {
     cursor: pointer;
     background-color: var(--b_dark);
     // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
@@ -28,11 +28,15 @@
 }
 
 .item-right-col {
-  width: 20px;
+  width: 26px;
   font-size: 20px;
   color: var(--f_dark);
   padding-right: 2px;
   visibility: hidden;
+
+  svg {
+    float: right;
+  }
 
   svg:hover {
     color: var(--accent_1);

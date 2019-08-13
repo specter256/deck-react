@@ -2,6 +2,7 @@ import React from 'react';
 import SplitPane from 'react-split-pane';
 
 import ControlBar from 'components/ControlBar/ControlBar';
+import { Note } from 'interfaces/interfaces';
 
 import './NoteContent.scss';
 
@@ -9,13 +10,18 @@ const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
 
 type NoteContentProps = {
-  saveNote: (data: any) => Promise<any>;
+  addNote: (data: any) => Promise<any>;
+  updNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<void>;
+  toggleEditMode: () => void;
+  editMode: boolean;
+  selectedNote: Note;
 }
 
 type NoteContentState = {
   value: string;
   markdown: string;
+  selectedNote?: Note;
 }
 
 export default class NoteContent extends React.Component<NoteContentProps, NoteContentState> {
@@ -28,14 +34,52 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.saveNote = this.saveNote.bind(this);
+    this.addNote = this.addNote.bind(this);
+    this.updNote = this.updNote.bind(this);
+    this.onKeyDownEditor = this.onKeyDownEditor.bind(this);
   }
 
-  saveNote() {
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    if (
+      prevState.selectedNote === undefined
+      || prevState.selectedNote.id !== nextProps.selectedNote.id
+    ) {
+      const data = nextProps.selectedNote;
+
+      if (!data) {
+        return null;
+      }
+
+      return {
+        value: data.text,
+        markdown: md.render(data.text),
+        selectedNote: data,
+      }
+    }
+
+    return null;
+  }
+
+  addNote() {
     const data = {
       text: this.state.value,
     };
-    this.props.saveNote(data)
+
+    this.props.addNote(data)
+      .then((res) => {
+        if (res.status === 200) {
+          this.props.fetchNotes();
+        }
+      });
+  }
+
+  updNote() {
+    const data = {
+      id: this.props.selectedNote.id,
+      text: this.state.value,
+    };
+
+    this.props.updNote(data)
       .then((res) => {
         if (res.status === 200) {
           this.props.fetchNotes();
@@ -46,8 +90,17 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   handleChange(event: any) {
     this.setState({
       value: event.target.value,
-      markdown: md.render(event.target.value)
+      markdown: md.render(event.target.value),
     });
+  }
+
+  onKeyDownEditor(event: any) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      // this.setState(prevState => ({
+      //   value: prevState.value + '  ',
+      // }));
+    }
   }
 
   createMarkdown() {
@@ -55,6 +108,19 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   }
 
   render() {
+    const editor =
+      <textarea
+        value={this.state.value}
+        onChange={this.handleChange}
+        onKeyDown={this.onKeyDownEditor}>
+      </textarea>
+
+    const preview =
+      <div
+        className="previewContainer"
+        dangerouslySetInnerHTML={this.createMarkdown()}>
+      </div>
+
     return (
       <div id="editor-content-wrap">
         <section id="editor-content">
@@ -65,19 +131,13 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             defaultSize={75}
             resizerStyle={{ background: 'none' }}>
             <ControlBar
-              saveNote={this.saveNote}/>
+              selectedNote={this.props.selectedNote}
+              addNote={this.addNote}
+              updNote={this.updNote}
+              toggleEditMode={this.props.toggleEditMode}
+              editMode={this.props.editMode}/>
             <div style={{ height: '100%' }}>
-              <SplitPane
-                split="vertical"
-                allowResize={false}
-                defaultSize="50%"
-                resizerStyle={{ background: 'none' }}>
-                <textarea
-                  value={this.state.value}
-                  onChange={this.handleChange}>
-                </textarea>
-                <div dangerouslySetInnerHTML={this.createMarkdown()}></div>
-              </SplitPane>
+              { this.props.editMode ? editor : preview }
             </div>
           </SplitPane>
         </section>

@@ -9,9 +9,10 @@ import './Navbar.scss';
 
 type NavbarProps = {
   fetchNotes: () => Promise<void>;
+  fetchNote: () => Promise<void>;
   delNote: () => Promise<void>;
-  loading: boolean;
   notes: Note[];
+  selectedNote: Note;
 }
 
 type NavbarState = {
@@ -26,7 +27,7 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
   }
 
   render() {
-    const { loading, notes } = this.props;
+    const { notes } = this.props;
 
     return (
       <nav>
@@ -45,7 +46,9 @@ export default class NavBar extends React.Component<NavbarProps, NavbarState> {
           <div className="nav-notes">
             <NoteList
               notes={notes}
+              selectedNote={this.props.selectedNote}
               fetchNotes={this.props.fetchNotes}
+              fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}/>
           </div>
         </SplitPane>

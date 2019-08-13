@@ -1,19 +1,23 @@
 import React from 'react';
 import { MdCheck, MdClose, MdDelete } from "react-icons/md";
 
+import { Note } from 'interfaces/interfaces';
+
 import './NoteItem.scss';
 
 type NoteItemProps = {
   fetchNotes: () => Promise<void>;
+  fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
   data: any;
+  selectedNote: Note;
 }
 
 type NoteItemState = {
   showDelConfirm: boolean;
 }
 
-export default class NoteItem  extends React.Component<NoteItemProps, NoteItemState> {
+export default class NoteItem extends React.Component<NoteItemProps, NoteItemState> {
   constructor(props: NoteItemProps) {
     super(props);
 
@@ -23,7 +27,12 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
 
     this.onShowDelConfirm = this.onShowDelConfirm.bind(this);
     this.onHideDelConfirm = this.onHideDelConfirm.bind(this);
+    this.onSelectNote = this.onSelectNote.bind(this);
     this.onDelNote = this.onDelNote.bind(this);
+  }
+
+  onSelectNote() {
+    this.props.fetchNote(this.props.data.id);
   }
 
   onDelNote() {
@@ -39,6 +48,17 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
     this.setState({ showDelConfirm: false });
   }
 
+  getSelectedClass(): string {
+    if (
+      this.props.selectedNote
+      && this.props.selectedNote.id === this.props.data.id
+    ) {
+      return 'selected';
+    }
+
+    return '';
+  }
+
   render() {
     const delIcon =
       <div className="item-del">
@@ -52,8 +72,10 @@ export default class NoteItem  extends React.Component<NoteItemProps, NoteItemSt
       </div>
 
     return (
-      <div className="item-container">
-        <div className="item-left-col">
+      <div className={"item-container " + this.getSelectedClass()}>
+        <div
+          className="item-left-col"
+          onClick={this.onSelectNote}>
           <div className="item-text">
             {this.props.data.text}
           </div>

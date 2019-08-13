@@ -8,8 +8,10 @@ import { Note } from 'interfaces/interfaces';
 
 type NoteListProps = {
   fetchNotes: () => Promise<void>;
+  fetchNote: () => Promise<void>;
   delNote: (data: any) => Promise<any>;
   notes: Note[];
+  selectedNote: Note;
 }
 
 type NoteListState = {
@@ -39,6 +41,8 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
           <NoteItem
             data={note}
             key={index}
+            selectedNote={this.props.selectedNote}
+            fetchNote={this.props.fetchNote}
             fetchNotes={this.props.fetchNotes}
             delNote={this.onDelNote}/>
         ))}

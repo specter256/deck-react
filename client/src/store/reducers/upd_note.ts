@@ -1,27 +1,27 @@
 import {
-  SAVE_NOTE_BEGIN,
-  SAVE_NOTE_SUCCESS,
-  SAVE_NOTE_FAILURE
-} from 'store/actions/save_note';
+  UPD_NOTE_BEGIN,
+  UPD_NOTE_SUCCESS,
+  UPD_NOTE_FAILURE
+} from 'store/actions/upd_note';
 
 const initialState = {
   error: null
 };
 
-export const saveNote = (state = initialState, action: any) => {
+export const updNote = (state = initialState, action: any) => {
   switch(action.type) {
-    case SAVE_NOTE_BEGIN:
+    case UPD_NOTE_BEGIN:
       return {
         ...state,
         error: null
       };
 
-    case SAVE_NOTE_SUCCESS:
+    case UPD_NOTE_SUCCESS:
       return {
         ...state
       };
 
-    case SAVE_NOTE_FAILURE:
+    case UPD_NOTE_FAILURE:
       return {
         ...state,
         error: action.payload.error

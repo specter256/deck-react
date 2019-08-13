@@ -1,3 +1,7 @@
+.previewContainer {
+  padding: 10px;
+}
+
 #editor-content-wrap {
   height: 100%;
 }
@@ -21,29 +25,6 @@
   overflow: hidden;
 }
 
-#editor-content button {
-  padding: 10px;
-  font-size: 24px;
-  background-color: var(--b_medium);
-  border: none;
-  outline: none;
-  color: var(--f_dark);
-  float: right;
-}
-
-#editor-content button:hover {
-  background-color: var(--b_light);
-  cursor: pointer;
-}
-
-#editor-content button:active {
-  background-color: var(--b_medium);
-}
-
-#editor-content form {
-  height: 100%;
-}
-
 textarea {
   width: 100%;
   padding: 10px;
@@ -55,6 +36,7 @@ textarea {
   color: var(--f_medium);
   border: none;
   height: 100%;
+  line-height: var(--line-height);
 }
 
 ::-webkit-scrollbar {

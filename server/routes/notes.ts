@@ -12,6 +12,16 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  getRepository(Note)
+    .createQueryBuilder()
+    .where('id = :id', { id: req.params.id })
+    .getOne()
+    .then(data => {
+      res.json(data);
+    });
+});
+
 router.post('/add', async (req, res) => {
   const data = req.body;
   const currentDate = getCurrentDate();
@@ -27,7 +37,24 @@ router.post('/add', async (req, res) => {
     }])
     .execute();
 
-  res.json({status:200});
+  res.json({status: 200});
+});
+
+router.post('/upd', async (req, res) => {
+  const data = req.body;
+  const currentDate = getCurrentDate();
+
+  await getConnection()
+    .createQueryBuilder()
+    .update(Note)
+    .set({
+      text: data.text,
+      update_date: currentDate
+    })
+    .where("id = :id", { id: data.id })
+    .execute();
+
+  res.json({status: 200});
 });
 
 router.delete('/del', async (req, res) => {
@@ -40,8 +67,9 @@ router.delete('/del', async (req, res) => {
     .where('id = :id', { id: data.id })
     .execute();
 
-  res.json({status:200});
+  res.json({status: 200});
 });
+
 const getCurrentDate = () => {
   const currentDate = new Date();
   let year = currentDate.getFullYear();
