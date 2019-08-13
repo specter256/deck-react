@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdSave } from 'react-icons/md';
+import { MdSave, MdAddBox } from 'react-icons/md';
 
 import { Note } from 'interfaces/interfaces';
 
@@ -9,6 +9,7 @@ type ControlBarProps = {
   addNote: () => void;
   updNote: () => void;
   toggleEditMode: () => void;
+  clearSelectedNote: () => void;
   editMode: boolean;
   selectedNote: Note;
 }
@@ -19,8 +20,13 @@ type ControlBarState = {
 export default class ControlBar extends React.Component<ControlBarProps, ControlBarState> {
   constructor(props: ControlBarProps) {
     super(props);
+    this.onNewNote = this.onNewNote.bind(this);
     this.onSaveNote = this.onSaveNote.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
+  }
+
+  onNewNote() {
+    this.props.clearSelectedNote();
   }
 
   onSaveNote() {
@@ -42,6 +48,11 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
         <button
           onClick={this.toggleEditMode}>
           {this.props.editMode ? 'View' : 'Edit'}
+        </button>
+        <button
+          onClick={this.onNewNote}
+          title="New note">
+          <MdAddBox/>
         </button>
         <button
           onClick={this.onSaveNote}

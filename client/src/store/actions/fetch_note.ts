@@ -4,6 +4,7 @@ import { Note } from 'interfaces/interfaces';
 export const FETCH_NOTE_BEGIN   = 'FETCH_NOTE_BEGIN';
 export const FETCH_NOTE_SUCCESS = 'FETCH_NOTE_SUCCESS';
 export const FETCH_NOTE_FAILURE = 'FETCH_NOTE_FAILURE';
+export const CLEAR_SELECTED_NOTE = 'CLEAR_SELECTED_NOTE';
 
 export const fetchNoteBegin = () => ({
   type: FETCH_NOTE_BEGIN
@@ -47,3 +48,7 @@ export function fetchNote(id: number) {
     }
   };
 }
+
+export const clearSelectedNote = () => (dispatch: any) => {
+  dispatch({ type: 'CLEAR_SELECTED_NOTE' });
+};

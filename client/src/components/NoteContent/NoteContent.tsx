@@ -3,6 +3,8 @@ import SplitPane from 'react-split-pane';
 
 import ControlBar from 'components/ControlBar/ControlBar';
 import { Note } from 'interfaces/interfaces';
+import { store } from 'store/store';
+import { Editor } from 'utils/editor';
 
 import './NoteContent.scss';
 
@@ -14,6 +16,7 @@ type NoteContentProps = {
   updNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<void>;
   toggleEditMode: () => void;
+  clearSelectedNote: () => void;
   editMode: boolean;
   selectedNote: Note;
 }
@@ -25,6 +28,8 @@ type NoteContentState = {
 }
 
 export default class NoteContent extends React.Component<NoteContentProps, NoteContentState> {
+  editor: any;
+
   constructor(props: NoteContentProps) {
     super(props);
 
@@ -37,30 +42,62 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     this.addNote = this.addNote.bind(this);
     this.updNote = this.updNote.bind(this);
     this.onKeyDownEditor = this.onKeyDownEditor.bind(this);
+    this.onChangeSelectedItem = this.onChangeSelectedItem.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+  componentDidMount() {
+    function selectedItem(state: any) {
+      return state.fetchNote.data;
+    }
+
+    this.editor = new Editor(this.refs.editor);
+    this.observeStore(store, selectedItem, this.onChangeSelectedItem);
+  }
+
+  onChangeSelectedItem(currState: any) {
+    if (!currState) {
+      this.setState({
+        value: '',
+        markdown: '',
+        selectedNote: undefined,
+      });
+      this.editor.setValue('');
+      return;
+    }
+
     if (
-      prevState.selectedNote === undefined
-      || prevState.selectedNote.id !== nextProps.selectedNote.id
+      this.state.selectedNote !== undefined &&
+      currState.id === this.state.selectedNote.id
     ) {
-      const data = nextProps.selectedNote;
+      return;
+    }
 
-      if (!data) {
-        return null;
-      }
+    this.setState({
+      value: currState.text,
+      markdown: md.render(currState.text),
+      selectedNote: currState,
+    });
+  }
 
-      return {
-        value: data.text,
-        markdown: md.render(data.text),
-        selectedNote: data,
+  observeStore(store: any, select: any, onChange: any) {
+    let currentState: any;
+
+    function handleChange() {
+      let nextState = select(store.getState());
+      if (nextState !== currentState) {
+        currentState = nextState;
+        onChange(currentState);
       }
     }
 
-    return null;
+    let unsubscribe = store.subscribe(handleChange);
+    handleChange();
+    return unsubscribe;
   }
 
   addNote() {
+    this.editor.addNewLineAtEnd();
+
     const data = {
       text: this.state.value,
     };
@@ -74,6 +111,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   }
 
   updNote() {
+    this.editor.addNewLineAtEnd();
+
     const data = {
       id: this.props.selectedNote.id,
       text: this.state.value,
@@ -97,9 +136,12 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   onKeyDownEditor(event: any) {
     if (event.key === 'Tab') {
       event.preventDefault();
-      // this.setState(prevState => ({
-      //   value: prevState.value + '  ',
-      // }));
+      this.editor.insertChar('  ');
+    }
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.editor.setIndentForNewLine();
     }
   }
 
@@ -107,9 +149,19 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     return {__html: this.state.markdown};
   }
 
+  isEditorHidden() {
+    return this.props.editMode ? '' : 'hidden';
+  }
+
+  isPeviewHidden() {
+    return this.props.editMode ? 'hidden' : '';
+  }
+
   render() {
     const editor =
       <textarea
+        className={this.isEditorHidden()}
+        ref="editor"
         value={this.state.value}
         onChange={this.handleChange}
         onKeyDown={this.onKeyDownEditor}>
@@ -117,7 +169,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
 
     const preview =
       <div
-        className="previewContainer"
+        className={"previewContainer " + this.isPeviewHidden()}
         dangerouslySetInnerHTML={this.createMarkdown()}>
       </div>
 
@@ -132,12 +184,14 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             resizerStyle={{ background: 'none' }}>
             <ControlBar
               selectedNote={this.props.selectedNote}
+              clearSelectedNote={this.props.clearSelectedNote}
               addNote={this.addNote}
               updNote={this.updNote}
               toggleEditMode={this.props.toggleEditMode}
               editMode={this.props.editMode}/>
             <div style={{ height: '100%' }}>
-              { this.props.editMode ? editor : preview }
+              { editor }
+              { preview }
             </div>
           </SplitPane>
         </section>

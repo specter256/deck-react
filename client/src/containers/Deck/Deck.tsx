@@ -7,7 +7,7 @@ import * as themes from 'utils/themes';
 import Navbar from 'components/Navbar/Navbar';
 import NoteContent from 'components/NoteContent/NoteContent';
 import { fetchNotes } from 'store/actions/fetch_notes';
-import { fetchNote } from 'store/actions/fetch_note';
+import { fetchNote, clearSelectedNote } from 'store/actions/fetch_note';
 import { addNote } from 'store/actions/add_note';
 import { updNote } from 'store/actions/upd_note';
 import { delNote } from 'store/actions/del_note';
@@ -23,6 +23,7 @@ type DeckProps = {
   updNote: () => Promise<void>;
   delNote: () => Promise<void>;
   toggleEditMode: () => void;
+  clearSelectedNote: () => void;
   editMode: boolean;
   selectedNote: Note;
   notes: Note[];
@@ -56,6 +57,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
           <NoteContent
             toggleEditMode={this.props.toggleEditMode}
             selectedNote={this.props.selectedNote}
+            clearSelectedNote={this.props.clearSelectedNote}
             fetchNotes={this.props.fetchNotes}
             addNote={this.props.addNote}
             updNote={this.props.updNote}
@@ -75,6 +77,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = {
   fetchNotes,
   fetchNote,
+  clearSelectedNote,
   addNote,
   updNote,
   delNote,

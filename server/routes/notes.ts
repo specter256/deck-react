@@ -6,7 +6,12 @@ import { Note } from "../entity/note";
 const router : express.Router = express.Router();
 
 router.get('/', (req, res) => {
-  getRepository(Note).find()
+  getRepository(Note)
+    .find({
+      order: {
+        update_date: 'DESC'
+      }
+    })
     .then(data => {
       res.json(data);
     });
