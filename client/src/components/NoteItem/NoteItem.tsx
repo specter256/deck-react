@@ -9,7 +9,7 @@ type NoteItemProps = {
   fetchNotes: () => Promise<void>;
   fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
-  data: any;
+  data: Note;
   selectedNote: Note;
 }
 

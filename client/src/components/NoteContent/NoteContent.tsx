@@ -1,5 +1,7 @@
 import React from 'react';
 import SplitPane from 'react-split-pane';
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 
 import ControlBar from 'components/ControlBar/ControlBar';
 import { Note } from 'interfaces/interfaces';
@@ -10,6 +12,13 @@ import './NoteContent.scss';
 
 const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
+const animatedComponents = makeAnimated();
+
+const selectOptions = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 
 type NoteContentProps = {
   addNote: (data: any) => Promise<any>;
@@ -137,19 +146,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
   }
 
   onKeyDownEditor(event: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      this.editor.insertChar('  ');
-    }
-
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      this.editor.setIndentForNewLine();
-    }
-
-    if (event.ctrlKey && event.key === ']') {
-      this.editor.nextMarker();
-    }
+    this.editor.onKeyDownEditor(event);
   }
 
   createMarkdown() {
@@ -197,6 +194,31 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               toggleEditMode={this.props.toggleEditMode}
               editMode={this.props.editMode}/>
             <div style={{ height: '100%' }}>
+              <div className="select-tag-container">
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={selectOptions}
+                  placeholder="Select tags..."
+                  theme={theme => ({
+                    ...theme,
+                    padding: '10px',
+                    borderRadius: 0,
+                    colors: {
+                      ...theme.colors,
+                      neutral0: 'var(--b_medium)',
+                      neutral20: 'var(--b_dark)',
+                      neutral30: 'var(--b_dark)',
+                      primary: 'var(--b_dark)',
+                      primary25: 'var(--b_light)',
+                      primary50: 'var(--b_dark)',
+                      dangerLight: 'var(--accent_1)',
+                      neutral10: 'var(--b_light)',
+                      neutral80: 'var(--f_medium)',
+                    },
+                  })}/>
+              </div>
               { editor }
               { preview }
             </div>
