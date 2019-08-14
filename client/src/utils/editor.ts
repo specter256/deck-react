@@ -39,6 +39,11 @@ export class Editor {
     const lastChar = this.editor.value.substr(this.editor.value.length - 1);
     if (lastChar !== "\n") {
       this.editor.value += "\n";
+      this.editor.focus();
     }
+  }
+
+  public nextMarker() {
+
   }
 }

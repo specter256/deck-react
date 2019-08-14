@@ -27,7 +27,7 @@ function handleErrors(response: any) {
   return response;
 }
 
-const add = async (data: any) => {
+const upd = async (data: any) => {
   const response = await axios.post('api/notes/upd', data);
   const res = await handleErrors(response);
   return res.data;
@@ -38,7 +38,7 @@ export function updNote(data: any) {
     dispatch(updNoteBegin());
 
     try {
-      const res = await add(data);
+      const res = await upd(data);
       dispatch(updNoteSuccess(res));
       return res;
     }

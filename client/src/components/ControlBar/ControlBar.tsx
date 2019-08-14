@@ -38,7 +38,6 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
   }
 
   toggleEditMode() {
-    this.setState({selectedNote: null});
     this.props.toggleEditMode()
   }
 

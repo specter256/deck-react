@@ -112,18 +112,21 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
 
   updNote() {
     this.editor.addNewLineAtEnd();
+    this.setState({
+      value: this.editor.getValue(),
+    }, () => {
+      const data = {
+        id: this.props.selectedNote.id,
+        text: this.state.value,
+      };
 
-    const data = {
-      id: this.props.selectedNote.id,
-      text: this.state.value,
-    };
-
-    this.props.updNote(data)
-      .then((res) => {
-        if (res.status === 200) {
-          this.props.fetchNotes();
-        }
-      });
+      this.props.updNote(data)
+        .then((res) => {
+          if (res.status === 200) {
+            this.props.fetchNotes();
+          }
+        });
+    });
   }
 
   handleChange(event: any) {
@@ -133,7 +136,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     });
   }
 
-  onKeyDownEditor(event: any) {
+  onKeyDownEditor(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Tab') {
       event.preventDefault();
       this.editor.insertChar('  ');
@@ -142,6 +145,10 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     if (event.key === 'Enter') {
       event.preventDefault();
       this.editor.setIndentForNewLine();
+    }
+
+    if (event.ctrlKey && event.key === ']') {
+      this.editor.nextMarker();
     }
   }
 
