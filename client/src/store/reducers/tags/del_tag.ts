@@ -1,27 +1,27 @@
 import {
-  ADD_NOTE_BEGIN,
-  ADD_NOTE_SUCCESS,
-  ADD_NOTE_FAILURE
-} from 'store/actions/add_note';
+  DEL_TAG_BEGIN,
+  DEL_TAG_SUCCESS,
+  DEL_TAG_FAILURE
+} from 'store/actions/tags/del_tag';
 
 const initialState = {
   error: null
 };
 
-export const addNote = (state = initialState, action: any) => {
+export const delTag = (state = initialState, action: any) => {
   switch(action.type) {
-    case ADD_NOTE_BEGIN:
+    case DEL_TAG_BEGIN:
       return {
         ...state,
         error: null
       };
 
-    case ADD_NOTE_SUCCESS:
+    case DEL_TAG_SUCCESS:
       return {
         ...state
       };
 
-    case ADD_NOTE_FAILURE:
+    case DEL_TAG_FAILURE:
       return {
         ...state,
         error: action.payload.error

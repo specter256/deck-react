@@ -4,3 +4,8 @@ export interface Note {
   create_date: Date,
   update_date: Date,
 }
+
+export interface Tag {
+  id: number,
+  name: string,
+}

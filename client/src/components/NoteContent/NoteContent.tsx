@@ -50,7 +50,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     this.handleChange = this.handleChange.bind(this);
     this.addNote = this.addNote.bind(this);
     this.updNote = this.updNote.bind(this);
-    this.onKeyDownEditor = this.onKeyDownEditor.bind(this);
+    this.handleKeyDownEditor = this.handleKeyDownEditor.bind(this);
     this.onChangeSelectedItem = this.onChangeSelectedItem.bind(this);
   }
 
@@ -145,7 +145,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     });
   }
 
-  onKeyDownEditor(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+  handleKeyDownEditor(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     this.editor.onKeyDownEditor(event);
   }
 
@@ -168,13 +168,40 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
         ref="editor"
         value={this.state.value}
         onChange={this.handleChange}
-        onKeyDown={this.onKeyDownEditor}>
+        onKeyDown={this.handleKeyDownEditor}>
       </textarea>
 
     const preview =
       <div
-        className={"previewContainer " + this.isPeviewHidden()}
+        className={"preview-container " + this.isPeviewHidden()}
         dangerouslySetInnerHTML={this.createMarkdown()}>
+      </div>
+
+    const selectTag =
+      <div className="select-tag-container">
+        <Select
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          isMulti
+          options={selectOptions}
+          placeholder="Select tags..."
+          theme={theme => ({
+            ...theme,
+            padding: '10px',
+            borderRadius: 0,
+            colors: {
+              ...theme.colors,
+              neutral0: 'var(--b_medium)',
+              neutral20: 'var(--b_dark)',
+              neutral30: 'var(--b_dark)',
+              primary: 'var(--b_dark)',
+              primary25: 'var(--b_light)',
+              primary50: 'var(--b_dark)',
+              dangerLight: 'var(--accent_1)',
+              neutral10: 'var(--b_light)',
+              neutral80: 'var(--f_medium)',
+            },
+          })}/>
       </div>
 
     return (
@@ -194,31 +221,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               toggleEditMode={this.props.toggleEditMode}
               editMode={this.props.editMode}/>
             <div style={{ height: '100%' }}>
-              <div className="select-tag-container">
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={selectOptions}
-                  placeholder="Select tags..."
-                  theme={theme => ({
-                    ...theme,
-                    padding: '10px',
-                    borderRadius: 0,
-                    colors: {
-                      ...theme.colors,
-                      neutral0: 'var(--b_medium)',
-                      neutral20: 'var(--b_dark)',
-                      neutral30: 'var(--b_dark)',
-                      primary: 'var(--b_dark)',
-                      primary25: 'var(--b_light)',
-                      primary50: 'var(--b_dark)',
-                      dangerLight: 'var(--accent_1)',
-                      neutral10: 'var(--b_light)',
-                      neutral80: 'var(--f_medium)',
-                    },
-                  })}/>
-              </div>
+              { selectTag }
               { editor }
               { preview }
             </div>

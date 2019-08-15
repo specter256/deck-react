@@ -1,27 +1,27 @@
 import {
-  UPD_NOTE_BEGIN,
-  UPD_NOTE_SUCCESS,
-  UPD_NOTE_FAILURE
-} from 'store/actions/upd_note';
+  DEL_NOTE_BEGIN,
+  DEL_NOTE_SUCCESS,
+  DEL_NOTE_FAILURE
+} from 'store/actions/notes/del_note';
 
 const initialState = {
   error: null
 };
 
-export const updNote = (state = initialState, action: any) => {
+export const delNote = (state = initialState, action: any) => {
   switch(action.type) {
-    case UPD_NOTE_BEGIN:
+    case DEL_NOTE_BEGIN:
       return {
         ...state,
         error: null
       };
 
-    case UPD_NOTE_SUCCESS:
+    case DEL_NOTE_SUCCESS:
       return {
         ...state
       };
 
-    case UPD_NOTE_FAILURE:
+    case DEL_NOTE_FAILURE:
       return {
         ...state,
         error: action.payload.error

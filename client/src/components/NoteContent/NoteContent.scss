@@ -2,7 +2,7 @@
   display: none;
 }
 
-.previewContainer {
+.preview-container {
   padding: 10px;
   height: 100%;
 }
@@ -13,21 +13,6 @@
 
 #editor-content {
   height: 100%;
-}
-
-#editor-content input {
-  padding: 10px;
-  font-size: 12px;
-  font-family: var(--font-family);
-  background-color: var(--b_dark);
-  color: var(--f_medium);
-  border: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#editor-content .input-container {
-  overflow: hidden;
 }
 
 .select-tag-container {

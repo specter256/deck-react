@@ -3,7 +3,7 @@ import {
   FETCH_NOTE_SUCCESS,
   FETCH_NOTE_FAILURE,
   CLEAR_SELECTED_NOTE,
-} from 'store/actions/fetch_note';
+} from 'store/actions/notes/fetch_note';
 
 const initialState = {
   data: null,

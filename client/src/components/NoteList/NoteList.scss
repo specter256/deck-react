@@ -1,0 +1,37 @@
+.note-list {
+  height: 100vh;
+  background-color: var(--b_medium);
+  // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  // -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  // box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.note-list .Resizer {
+  z-index: 1;
+}
+
+.note-list {
+  overflow: auto;
+  height: 100%;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0; }
+
+  &:hover {
+    padding-right: 0px;
+  }
+
+  &:hover::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--b_dark);
+    cursor:pointer;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: var(--b_light);
+  }
+}

@@ -20,7 +20,6 @@ type NoteListState = {
 export default class NoteList extends React.Component<NoteListProps, NoteListState> {
   constructor(props: NoteListProps) {
     super(props);
-
     this.onDelNote = this.onDelNote.bind(this);
   }
 
@@ -36,17 +35,19 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
 
   render() {
     return (
-      <FlipMove duration={150} easing="ease-out">
-        {this.props.notes.map((note: Note, index: number) => (
-          <NoteItem
-            data={note}
-            key={index}
-            selectedNote={this.props.selectedNote}
-            fetchNote={this.props.fetchNote}
-            fetchNotes={this.props.fetchNotes}
-            delNote={this.onDelNote}/>
-        ))}
-      </FlipMove>
+      <div className="note-list">
+        <FlipMove duration={150} easing="ease-out">
+          {this.props.notes.map((note: Note, index: number) => (
+            <NoteItem
+              data={note}
+              key={index}
+              selectedNote={this.props.selectedNote}
+              fetchNote={this.props.fetchNote}
+              fetchNotes={this.props.fetchNotes}
+              delNote={this.onDelNote}/>
+          ))}
+        </FlipMove>
+      </div>
     );
   }
 }

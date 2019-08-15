@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { createConnection } from "typeorm";
 
 import notes from './routes/notes';
+import tags from './routes/tags';
 
 createConnection().then(connection => {
   const app = express();
@@ -11,6 +12,7 @@ createConnection().then(connection => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use('/api/notes', notes);
+  app.use('/api/tags', tags);
 
   app.listen(port, () => `Server running on port ${port}`);
 });

@@ -2,7 +2,7 @@ import {
   FETCH_NOTES_BEGIN,
   FETCH_NOTES_SUCCESS,
   FETCH_NOTES_FAILURE
-} from 'store/actions/fetch_notes';
+} from 'store/actions/notes/fetch_notes';
 
 const initialState = {
   items: [],

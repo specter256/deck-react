@@ -1,0 +1,89 @@
+.tag-list {
+  width: 100%;
+  height: 100%;
+  // border-bottom: 1px solid var(--b_light);
+}
+
+.tags-container {
+  overflow: auto;
+  height: 100%;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0; }
+
+  &:hover::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--b_dark);
+    cursor: pointer;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: var(--b_light);
+  }
+}
+
+.tags-container svg {
+  visibility: hidden;
+  font-size: 20px;
+}
+
+.tags-container li:hover svg {
+  visibility: visible;
+}
+
+.tag-list ul {
+  margin: 0;
+  padding: 5px;;
+}
+
+.tag-list li {
+  list-style-type: none;
+  font-size: 24px;
+  color: var(--f_dark);
+  padding: 4px 0;
+  display: flex;
+
+  &:hover .fixed svg {
+    color: var(--f_medium);
+  }
+
+  &:hover {
+    color: var(--f_medium);
+    background-color: var(--b_light);
+  }
+}
+
+.tag-del {
+  &:hover svg {
+    color: var(--accent_1);
+    cursor: pointer;
+  }
+}
+
+.tag-list li svg {
+  vertical-align: middle;
+}
+
+.tag-list li button {
+  vertical-align: middle;
+  flex: 1;
+  min-height: 24px;
+  word-break: break-all;
+  padding-left: 5px;
+}
+
+.tag-list input {
+  padding: 5px;
+  font-size: 12px;
+  font-family: var(--font-family);
+  background-color: var(--b_dark);
+  color: var(--f_medium);
+  border: 1px solid var(--b_light);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tag-list .input-container {
+  overflow: hidden;
+  padding: 10px;
+}
