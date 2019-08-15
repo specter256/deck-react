@@ -1,5 +1,5 @@
 .item-container {
-  height: 120px;
+  min-height: 120px;
   display: flex;
   border-bottom: 1px solid var(--b_light);
   padding: 5px 0px 5px 20px;
@@ -56,6 +56,7 @@
 
 .item-tag-list {
   font-weight: bold;
+  word-break: break-all;
 }
 
 .item-tag {

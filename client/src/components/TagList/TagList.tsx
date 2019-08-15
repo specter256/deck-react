@@ -43,6 +43,10 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     }
   }
 
+  selectTag(id: number) {
+
+  }
+
   onDelTag(id: number) {
     this.props.delTag({ id })
       .then((res: any) => {
@@ -74,7 +78,7 @@ export default class TagList extends React.Component<TagListProps, TagListState>
           <FlipMove duration={150} easing="ease-out">
             {this.props.tags.map((tag: Tag, index: number) => (
               <li key={index}>
-                <button>{tag.name}</button>
+                <button onClick={() => this.selectTag(tag.id)}>{tag.name}</button>
                 <div className="tag-del">
                   <MdDelete onClick={() => this.onDelTag(tag.id)}/>
                 </div>

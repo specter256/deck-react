@@ -4,33 +4,6 @@
   // border-bottom: 1px solid var(--b_light);
 }
 
-.tags-container {
-  overflow: auto;
-  height: 100%;
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar { width: 0; }
-
-  &:hover::-webkit-scrollbar {
-    width: 6px;
-    background-color: var(--b_dark);
-    cursor: pointer;
-  }
-
-  &:hover::-webkit-scrollbar-thumb {
-    background-color: var(--b_light);
-  }
-}
-
-.tags-container svg {
-  visibility: hidden;
-  font-size: 20px;
-}
-
-.tags-container li:hover svg {
-  visibility: visible;
-}
-
 .tag-list ul {
   margin: 0;
   padding: 5px;;
@@ -42,6 +15,7 @@
   color: var(--f_dark);
   padding: 4px 0;
   display: flex;
+  cursor: pointer;
 
   &:hover .fixed svg {
     color: var(--f_medium);
@@ -50,13 +24,6 @@
   &:hover {
     color: var(--f_medium);
     background-color: var(--b_light);
-  }
-}
-
-.tag-del {
-  &:hover svg {
-    color: var(--accent_1);
-    cursor: pointer;
   }
 }
 
@@ -86,4 +53,38 @@
 .tag-list .input-container {
   overflow: hidden;
   padding: 10px 5px;
+}
+
+.tags-container {
+  overflow: auto;
+  height: 100%;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0; }
+
+  &:hover::-webkit-scrollbar {
+    width: 6px;
+    background-color: var(--b_dark);
+    cursor: pointer;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: var(--b_light);
+  }
+}
+
+.tags-container svg {
+  visibility: hidden;
+  font-size: 20px;
+}
+
+.tags-container li:hover svg {
+  visibility: visible;
+}
+
+.tag-del {
+  &:hover svg {
+    color: var(--accent_1);
+    cursor: pointer;
+  }
 }
