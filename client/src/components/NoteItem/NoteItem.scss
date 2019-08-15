@@ -54,7 +54,14 @@
   color: var(--f_dark);
 }
 
-.item-tag {
-  color: var(--accent_1);
+.item-tag-list {
   font-weight: bold;
+}
+
+.item-tag {
+  padding-right: 5px;
+
+  &:hover {
+    color: var(--accent_1);
+  }
 }

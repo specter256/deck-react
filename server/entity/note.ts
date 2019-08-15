@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Tag } from './tag';
 
 @Entity()
 export class Note {
@@ -13,4 +14,8 @@ export class Note {
 
   @Column()
   update_date!: string;
+
+  @ManyToMany(type => Tag)
+  @JoinTable()
+  tags!: Tag[];
 }

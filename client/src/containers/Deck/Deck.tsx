@@ -83,6 +83,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
               fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}/>
             <NoteContent
+              tags={this.props.tags}
               toggleEditMode={this.props.toggleEditMode}
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}

@@ -4,7 +4,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 import ControlBar from 'components/ControlBar/ControlBar';
-import { Note } from 'interfaces/interfaces';
+import { Note, Tag } from 'interfaces/interfaces';
 import { store } from 'store/store';
 import { Editor } from 'utils/editor';
 
@@ -14,12 +14,6 @@ const MarkdownIt = require('markdown-it');
 const md = new MarkdownIt();
 const animatedComponents = makeAnimated();
 
-const selectOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
-
 type NoteContentProps = {
   addNote: (data: any) => Promise<any>;
   updNote: (data: any) => Promise<any>;
@@ -28,12 +22,15 @@ type NoteContentProps = {
   clearSelectedNote: () => void;
   editMode: boolean;
   selectedNote: Note;
+  tags: Tag[];
 }
 
 type NoteContentState = {
   value: string;
   markdown: string;
   selectedNote?: Note;
+  tagsOptions: [];
+  selectedTags: [];
 }
 
 export default class NoteContent extends React.Component<NoteContentProps, NoteContentState> {
@@ -45,22 +42,37 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     this.state = {
       value: '',
       markdown: '',
+      tagsOptions: [],
+      selectedTags: [],
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeEditor = this.handleChangeEditor.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
     this.addNote = this.addNote.bind(this);
     this.updNote = this.updNote.bind(this);
     this.handleKeyDownEditor = this.handleKeyDownEditor.bind(this);
     this.onChangeSelectedItem = this.onChangeSelectedItem.bind(this);
+    this.onChangeTags = this.onChangeTags.bind(this);
   }
 
   componentDidMount() {
-    function selectedItem(state: any) {
+    function selectedItemSelector(state: any) {
       return state.fetchNote.data;
     }
 
+    function tagsSelector(state: any) {
+      return state.fetchTags.items;
+    }
+
     this.editor = new Editor(this.refs.editor);
-    this.observeStore(store, selectedItem, this.onChangeSelectedItem);
+    this.observeStore(store, selectedItemSelector, this.onChangeSelectedItem);
+    this.observeStore(store, tagsSelector, this.onChangeTags);
+  }
+
+  onChangeTags(currState: any) {
+    this.setState({
+      tagsOptions: this.parseTags(currState)
+    });
   }
 
   onChangeSelectedItem(currState: any) {
@@ -69,6 +81,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
         value: '',
         markdown: '',
         selectedNote: undefined,
+        selectedTags: [],
       });
       this.editor.setValue('');
       return;
@@ -85,7 +98,19 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       value: currState.text,
       markdown: md.render(currState.text),
       selectedNote: currState,
+      selectedTags: this.parseTags(currState.tags)
     });
+  }
+
+  parseTags(data: any) {
+    const tags = data.map((tag: Tag) => {
+      return {
+        value: tag.id,
+        label: tag.name,
+      };
+    });
+
+    return tags;
   }
 
   observeStore(store: any, select: any, onChange: any) {
@@ -109,6 +134,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
 
     const data = {
       text: this.state.value,
+      tags: this.state.selectedTags,
     };
 
     this.props.addNote(data)
@@ -127,6 +153,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       const data = {
         id: this.props.selectedNote.id,
         text: this.state.value,
+        tags: this.state.selectedTags,
       };
 
       this.props.updNote(data)
@@ -138,10 +165,16 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     });
   }
 
-  handleChange(event: any) {
+  handleChangeEditor(event: any) {
     this.setState({
       value: event.target.value,
       markdown: md.render(event.target.value),
+    });
+  }
+
+  handleChangeSelect(option: any) {
+    this.setState({
+      selectedTags: option
     });
   }
 
@@ -167,7 +200,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
         className={this.isEditorHidden()}
         ref="editor"
         value={this.state.value}
-        onChange={this.handleChange}
+        onChange={this.handleChangeEditor}
         onKeyDown={this.handleKeyDownEditor}>
       </textarea>
 
@@ -180,10 +213,12 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     const selectTag =
       <div className="select-tag-container">
         <Select
+          value={this.state.selectedTags}
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
-          options={selectOptions}
+          options={this.state.tagsOptions}
+          onChange={this.handleChangeSelect}
           placeholder="Select tags..."
           theme={theme => ({
             ...theme,

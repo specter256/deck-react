@@ -3,15 +3,14 @@ import { getRepository, getConnection } from "typeorm";
 
 import { Note } from "../entity/note";
 
-const router : express.Router = express.Router();
+const router: express.Router = express.Router();
 
 router.get('/', (req, res) => {
   getRepository(Note)
-    .find({
-      order: {
-        update_date: 'DESC'
-      }
-    })
+    .createQueryBuilder('note')
+    .orderBy('update_date', 'DESC')
+    .leftJoinAndSelect('note.tags', 'tag')
+    .getMany()
     .then(data => {
       res.json(data);
     });
@@ -19,8 +18,9 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   getRepository(Note)
-    .createQueryBuilder()
-    .where('id = :id', { id: req.params.id })
+    .createQueryBuilder('note')
+    .where('note.id = :id', { id: req.params.id })
+    .leftJoinAndSelect('note.tags', 'tag')
     .getOne()
     .then(data => {
       res.json(data);
@@ -31,16 +31,12 @@ router.post('/add', async (req, res) => {
   const data = req.body;
   const currentDate = getCurrentDate();
 
-  await getConnection()
-    .createQueryBuilder()
-    .insert()
-    .into(Note)
-    .values([{
-      text: data.text,
-      create_date: currentDate,
-      update_date: currentDate
-    }])
-    .execute();
+  const note = new Note();
+  note.text = data.text;
+  note.create_date = currentDate;
+  note.update_date = currentDate;
+  note.tags = parseTags(data.tags);
+  await getConnection().manager.save(note);
 
   res.json({status: 200});
 });
@@ -49,15 +45,11 @@ router.post('/upd', async (req, res) => {
   const data = req.body;
   const currentDate = getCurrentDate();
 
-  await getConnection()
-    .createQueryBuilder()
-    .update(Note)
-    .set({
-      text: data.text,
-      update_date: currentDate
-    })
-    .where("id = :id", { id: data.id })
-    .execute();
+  const note = await getRepository(Note).findOneOrFail(data.id);
+  note.text = data.text;
+  note.update_date = currentDate;
+  note.tags = parseTags(data.tags);
+  await getConnection().manager.save(note);
 
   res.json({status: 200});
 });
@@ -74,6 +66,17 @@ router.delete('/del', async (req, res) => {
 
   res.json({status: 200});
 });
+
+const parseTags = (data: any) => {
+  const tags = data.map((tag: any) => {
+    return {
+      id: tag.value,
+      name: tag.label,
+    };
+  });
+
+  return tags;
+}
 
 const getCurrentDate = () => {
   const currentDate = new Date();

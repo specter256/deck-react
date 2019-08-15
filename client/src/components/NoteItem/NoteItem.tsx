@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdCheck, MdClose, MdDelete } from "react-icons/md";
 
-import { Note } from 'interfaces/interfaces';
+import { Note, Tag } from 'interfaces/interfaces';
 
 import './NoteItem.scss';
 
@@ -82,8 +82,10 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
           <div className="item-update-date">
             {this.props.data.update_date}
           </div>
-          <div className="item-tag">
-            Tag
+          <div className="item-tag-list">
+            {this.props.data.tags.map((tag: Tag, index: number) => (
+              <span className="item-tag" key={index}>{tag.name}</span>
+            ))}
           </div>
         </div>
         <div className="item-right-col">
