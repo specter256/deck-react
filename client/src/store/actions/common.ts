@@ -1,11 +1,16 @@
 import { Tag } from 'interfaces/interfaces';
 
-export const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE';
+export const SET_FOLDER = 'SET_FOLDER';
+export const TOGGLE_VIEW_EDIT = 'TOGGLE_VIEW_EDIT';
 export const SEARCH_BY_TAG = 'SEARCH_BY_TAG';
 export const SEARCH_BY_TEXT = 'SEARCH_BY_TEXT';
 
-export const toggleEditMode = () => (dispatch: any) => {
-  dispatch({ type: 'TOGGLE_EDIT_MODE' });
+export const setFolder = (folder: string) => (dispatch: any) => {
+  dispatch({ type: 'SET_FOLDER', folder });
+};
+
+export const toggleViewEdit = () => (dispatch: any) => {
+  dispatch({ type: 'TOGGLE_VIEW_EDIT' });
 };
 
 export const searchByTag = (tag: Tag) => (dispatch: any) => {

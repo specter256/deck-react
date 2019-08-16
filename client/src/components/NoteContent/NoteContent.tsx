@@ -4,7 +4,8 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 import ControlBar from 'components/ControlBar/ControlBar';
-import { Note, Tag } from 'interfaces/interfaces';
+import Images from 'components/Images/Images';
+import { Note, Tag, Image } from 'interfaces/interfaces';
 import { store } from 'store/store';
 import { Editor } from 'utils/editor';
 
@@ -18,12 +19,15 @@ type NoteContentProps = {
   addNote: (data: any) => Promise<any>;
   updNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<void>;
-  toggleEditMode: () => void;
+  toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: () => void;
+  fetchImages: () => Promise<void>;
+  folder: string;
   editMode: boolean;
   selectedNote: Note;
   tags: Tag[];
+  images: Image[];
 }
 
 type NoteContentState = {
@@ -195,6 +199,10 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     return this.props.editMode ? 'hidden' : '';
   }
 
+  isFolderHidden(folder: string) {
+    return this.props.folder === folder ? '' : 'hidden';
+  }
+
   render() {
     const editor =
       <textarea
@@ -212,37 +220,35 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       </div>
 
     const selectTag =
-      <div className="select-tag-container">
-        <Select
-          value={this.state.selectedTags}
-          closeMenuOnSelect={false}
-          components={animatedComponents}
-          isMulti
-          options={this.state.tagsOptions}
-          onChange={this.handleChangeSelect}
-          placeholder="Select tags..."
-          theme={theme => ({
-            ...theme,
-            padding: '10px',
-            borderRadius: 0,
-            colors: {
-              ...theme.colors,
-              neutral0: 'var(--b_medium)',
-              neutral20: 'var(--b_dark)',
-              neutral30: 'var(--b_dark)',
-              primary: 'var(--b_dark)',
-              primary25: 'var(--b_light)',
-              primary50: 'var(--b_dark)',
-              dangerLight: 'var(--accent_1)',
-              neutral10: 'var(--b_light)',
-              neutral80: 'var(--f_medium)',
-            },
-          })}/>
-      </div>
+      <Select
+        value={this.state.selectedTags}
+        closeMenuOnSelect={false}
+        components={animatedComponents}
+        isMulti
+        options={this.state.tagsOptions}
+        onChange={this.handleChangeSelect}
+        placeholder="Select tags..."
+        theme={theme => ({
+          ...theme,
+          padding: '10px',
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            neutral0: 'var(--b_medium)',
+            neutral20: 'var(--b_dark)',
+            neutral30: 'var(--b_dark)',
+            primary: 'var(--b_dark)',
+            primary25: 'var(--b_light)',
+            primary50: 'var(--b_dark)',
+            dangerLight: 'var(--accent_1)',
+            neutral10: 'var(--b_light)',
+            neutral80: 'var(--f_medium)',
+          },
+        })}/>
 
     return (
-      <div id="editor-content-wrap">
-        <section id="editor-content">
+      <div id="note-content-wrap">
+        <section id="note-content">
           <SplitPane
             split="horizontal"
             allowResize={false}
@@ -254,13 +260,20 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               clearSelectedNote={this.props.clearSelectedNote}
               addNote={this.addNote}
               updNote={this.updNote}
-              toggleEditMode={this.props.toggleEditMode}
+              toggleViewEdit={this.props.toggleViewEdit}
               editMode={this.props.editMode}
               searchByText={this.props.searchByText}/>
             <div style={{ height: '100%' }}>
-              { selectTag }
-              { editor }
-              { preview }
+              <div className={"editor-folder " + this.isFolderHidden('notes')}>
+                { selectTag }
+                { editor }
+                { preview }
+              </div>
+              <div className={"images-folder " + this.isFolderHidden('images')}>
+                <Images
+                  images={this.props.images}
+                  fetchImages={this.props.fetchImages}/>
+              </div>
             </div>
           </SplitPane>
         </section>

@@ -7,11 +7,13 @@ import { Tag } from 'interfaces/interfaces';
 import './TagList.scss';
 
 type TagListProps = {
+  setFolder: (folder: string) => void;
   fetchTags: () => Promise<void>;
   addTag: (data: any) => Promise<void>;
   delTag: (data: any) => Promise<void>;
   fetchNotes: () => Promise<void>;
   searchByTag: (tag?: Tag) => void;
+  fetchImages: () => Promise<void>;
   tags: Tag[];
   searchTag: Tag;
 }
@@ -27,11 +29,16 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  fetchNotes = () => {
+  fetchNotes() {
     this.props.fetchNotes();
+    this.props.setFolder('notes');
   }
 
-  fetchImages = () => {
+  fetchImages() {
+    this.props.fetchImages().then((images) => {
+      console.log(images);
+    });
+    this.props.setFolder('images');
   }
 
   handleKeyDown(event: any) {

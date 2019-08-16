@@ -10,3 +10,9 @@ export interface Tag {
   id: number,
   name: string,
 }
+
+export interface Image {
+  id: number,
+  filename: string,
+  create_date: string,
+}

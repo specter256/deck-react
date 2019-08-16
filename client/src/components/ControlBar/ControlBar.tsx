@@ -8,7 +8,7 @@ import './ControlBar.scss';
 type ControlBarProps = {
   addNote: () => void;
   updNote: () => void;
-  toggleEditMode: () => void;
+  toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: (text?: string) => void;
   editMode: boolean;
@@ -25,7 +25,7 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
     super(props);
     this.onNewNote = this.onNewNote.bind(this);
     this.onSaveNote = this.onSaveNote.bind(this);
-    this.toggleEditMode = this.toggleEditMode.bind(this);
+    this.toggleViewEdit = this.toggleViewEdit.bind(this);
     this.handleChangeSearchInput = this.handleChangeSearchInput.bind(this);
   }
 
@@ -41,8 +41,8 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
     }
   }
 
-  toggleEditMode() {
-    this.props.toggleEditMode()
+  toggleViewEdit() {
+    this.props.toggleViewEdit()
   }
 
   handleChangeSearchInput(event: ChangeEvent<HTMLInputElement>) {
@@ -53,7 +53,7 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
     return (
       <div className="control-bar">
         <button
-          onClick={this.toggleEditMode}>
+          onClick={this.toggleViewEdit}>
           {this.props.editMode ? 'View' : 'Edit'}
         </button>
         <button

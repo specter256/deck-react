@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import TagList from 'components/TagList/TagList';
 import NoteList from 'components/NoteList/NoteList';
 import NoteContent from 'components/NoteContent/NoteContent';
-import { Note, Tag } from 'interfaces/interfaces';
+import { Note, Tag, Image } from 'interfaces/interfaces';
 import * as themes from 'utils/themes';
+import { AppState } from 'store/reducers/root';
 import { fetchNotes } from 'store/actions/notes/fetch_notes';
 import { addNote } from 'store/actions/notes/add_note';
 import { updNote } from 'store/actions/notes/upd_note';
@@ -14,10 +15,10 @@ import { delNote } from 'store/actions/notes/del_note';
 import { fetchTags } from 'store/actions/tags/fetch_tags';
 import { addTag } from 'store/actions/tags/add_tag';
 import { delTag } from 'store/actions/tags/del_tag';
-import { AppState } from 'store/reducers/root';
-import { toggleEditMode, searchByTag, searchByText } from 'store/actions/common';
 import { fetchNote, clearSelectedNote } from 'store/actions/notes/fetch_note';
 import { getFilteredNotes } from 'store/selectors/index';
+import { setFolder, toggleViewEdit, searchByTag, searchByText } from 'store/actions/common';
+import { fetchImages } from 'store/actions/images/fetch_images';
 
 import './Deck.scss';
 
@@ -30,19 +31,22 @@ type DeckProps = {
   fetchTags: () => Promise<void>;
   addTag: () => Promise<void>;
   delTag: () => Promise<void>;
-  toggleEditMode: () => void;
+  toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByTag: () => void;
   searchByText: () => void;
+  setFolder: () => void;
+  fetchImages: () => Promise<void>;
+  folder: string;
   editMode: boolean;
   selectedNote: Note;
   notes: Note[];
   tags: Tag[];
   searchTag: Tag;
+  images: Image[];
 }
 
-type DeckState = {
-}
+type DeckState = {}
 
 class Deck extends React.Component<DeckProps, DeckState> {
   constructor(props: any) {
@@ -68,7 +72,9 @@ class Deck extends React.Component<DeckProps, DeckState> {
             delTag={this.props.delTag}
             fetchNotes={this.props.fetchNotes}
             searchByTag={this.props.searchByTag}
-            searchTag={this.props.searchTag}/>
+            searchTag={this.props.searchTag}
+            setFolder={this.props.setFolder}
+            fetchImages={this.props.fetchImages}/>
           <SplitPane
             split="vertical"
             minSize={300}
@@ -83,15 +89,18 @@ class Deck extends React.Component<DeckProps, DeckState> {
               delNote={this.props.delNote}
               searchByTag={this.props.searchByTag}/>
             <NoteContent
+              folder={this.props.folder}
               tags={this.props.tags}
-              toggleEditMode={this.props.toggleEditMode}
+              toggleViewEdit={this.props.toggleViewEdit}
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}
               fetchNotes={this.props.fetchNotes}
               searchByText={this.props.searchByText}
               addNote={this.props.addNote}
               updNote={this.props.updNote}
-              editMode={this.props.editMode}/>
+              editMode={this.props.editMode}
+              fetchImages={this.props.fetchImages}
+              images={this.props.images}/>
           </SplitPane>
         </SplitPane>
       </div>
@@ -102,6 +111,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
 const mapStateToProps = (state: AppState) => ({
   notes: getFilteredNotes(state),
   tags: state.fetchTags.items,
+  images: state.fetchImages.items,
+  folder: state.common.folder,
   editMode: state.common.editMode,
   selectedNote: state.fetchNote.data,
   searchTag: state.common.search.tag
@@ -117,9 +128,11 @@ const mapDispatchToProps = {
   fetchTags,
   addTag,
   delTag,
-  toggleEditMode,
+  toggleViewEdit,
   searchByTag,
   searchByText,
+  setFolder,
+  fetchImages,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);

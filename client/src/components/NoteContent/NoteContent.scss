@@ -2,27 +2,31 @@
   display: none;
 }
 
+.editor-folder {
+  height: 100%;
+  padding: 0 10px;
+}
+
+.images-folder {
+  height: 100%;
+  padding: 0 10px;
+}
+
 .preview-container {
-  padding: 10px;
   height: 100%;
 }
 
-#editor-content-wrap {
+#note-content-wrap {
   height: 100%;
 }
 
-#editor-content {
+#note-content {
   height: 100%;
-}
-
-.select-tag-container {
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 textarea {
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
   box-sizing: border-box;
   resize: none;
   font-size: 12px;
