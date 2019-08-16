@@ -9,7 +9,7 @@ type NoteItemProps = {
   fetchNotes: () => Promise<void>;
   fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
-  selectTag: (tag?: Tag) => void;
+  searchByTag: (tag?: Tag) => void;
   data: Note;
   selectedNote: Note;
 }
@@ -60,8 +60,8 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
     return '';
   }
 
-  selectTag(tag?: Tag) {
-    this.props.selectTag(tag);
+  searchByTag(tag?: Tag) {
+    this.props.searchByTag(tag);
   }
 
   render() {
@@ -91,7 +91,7 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
             {this.props.data.tags.map((tag: Tag, index: number) => (
               <span
                 className="item-tag"
-                onClick={() => this.selectTag(tag)}
+                onClick={() => this.searchByTag(tag)}
                 key={index}>
                 {tag.name}
               </span>

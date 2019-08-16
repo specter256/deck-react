@@ -15,7 +15,7 @@ import { fetchTags } from 'store/actions/tags/fetch_tags';
 import { addTag } from 'store/actions/tags/add_tag';
 import { delTag } from 'store/actions/tags/del_tag';
 import { AppState } from 'store/reducers/root';
-import { toggleEditMode, selectTag } from 'store/actions/common';
+import { toggleEditMode, searchByTag, searchByText } from 'store/actions/common';
 import { fetchNote, clearSelectedNote } from 'store/actions/notes/fetch_note';
 import { getFilteredNotes } from 'store/selectors/index';
 
@@ -32,12 +32,13 @@ type DeckProps = {
   delTag: () => Promise<void>;
   toggleEditMode: () => void;
   clearSelectedNote: () => void;
-  selectTag: () => Promise<void>;
+  searchByTag: () => void;
+  searchByText: () => void;
   editMode: boolean;
   selectedNote: Note;
   notes: Note[];
   tags: Tag[];
-  selectedTag: Tag;
+  searchTag: Tag;
 }
 
 type DeckState = {
@@ -66,8 +67,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
             addTag={this.props.addTag}
             delTag={this.props.delTag}
             fetchNotes={this.props.fetchNotes}
-            selectTag={this.props.selectTag}
-            selectedTag={this.props.selectedTag}/>
+            searchByTag={this.props.searchByTag}
+            searchTag={this.props.searchTag}/>
           <SplitPane
             split="vertical"
             minSize={300}
@@ -80,13 +81,14 @@ class Deck extends React.Component<DeckProps, DeckState> {
               fetchNotes={this.props.fetchNotes}
               fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}
-              selectTag={this.props.selectTag}/>
+              searchByTag={this.props.searchByTag}/>
             <NoteContent
               tags={this.props.tags}
               toggleEditMode={this.props.toggleEditMode}
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}
               fetchNotes={this.props.fetchNotes}
+              searchByText={this.props.searchByText}
               addNote={this.props.addNote}
               updNote={this.props.updNote}
               editMode={this.props.editMode}/>
@@ -102,7 +104,7 @@ const mapStateToProps = (state: AppState) => ({
   tags: state.fetchTags.items,
   editMode: state.common.editMode,
   selectedNote: state.fetchNote.data,
-  selectedTag: state.common.selectedTag
+  searchTag: state.common.search.tag
 });
 
 const mapDispatchToProps = {
@@ -116,7 +118,8 @@ const mapDispatchToProps = {
   addTag,
   delTag,
   toggleEditMode,
-  selectTag,
+  searchByTag,
+  searchByText,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);

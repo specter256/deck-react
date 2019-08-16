@@ -20,6 +20,7 @@ type NoteContentProps = {
   fetchNotes: () => Promise<void>;
   toggleEditMode: () => void;
   clearSelectedNote: () => void;
+  searchByText: () => void;
   editMode: boolean;
   selectedNote: Note;
   tags: Tag[];
@@ -254,7 +255,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               addNote={this.addNote}
               updNote={this.updNote}
               toggleEditMode={this.props.toggleEditMode}
-              editMode={this.props.editMode}/>
+              editMode={this.props.editMode}
+              searchByText={this.props.searchByText}/>
             <div style={{ height: '100%' }}>
               { selectTag }
               { editor }

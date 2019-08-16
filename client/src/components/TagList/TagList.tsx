@@ -11,9 +11,9 @@ type TagListProps = {
   addTag: (data: any) => Promise<void>;
   delTag: (data: any) => Promise<void>;
   fetchNotes: () => Promise<void>;
-  selectTag: (tag?: Tag) => void;
+  searchByTag: (tag?: Tag) => void;
   tags: Tag[];
-  selectedTag: Tag;
+  searchTag: Tag;
 }
 
 type TagListState = {
@@ -45,8 +45,8 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     }
   }
 
-  selectTag(tag?: Tag) {
-    this.props.selectTag(tag);
+  searchByTag(tag?: Tag) {
+    this.props.searchByTag(tag);
   }
 
   onDelTag(id: number) {
@@ -59,11 +59,11 @@ export default class TagList extends React.Component<TagListProps, TagListState>
   }
 
   render() {
-    const { selectedTag } = this.props;
+    const { searchTag } = this.props;
 
-    const selectedTagBadge =
-      <div className="selected-tag-badge" onClick={() => this.selectTag()}>
-        <span className="label">{selectedTag ? selectedTag.name : ''}</span>
+    const searchTagBadge =
+      <div className="search-tag-badge" onClick={() => this.searchByTag()}>
+        <span className="label">{searchTag ? searchTag.name : ''}</span>
         <MdClose/>
       </div>
 
@@ -84,12 +84,12 @@ export default class TagList extends React.Component<TagListProps, TagListState>
             <MdImage/><button onClick={() => this.fetchImages()}>Images</button>
           </li>
         </ul>
-        {selectedTag ? selectedTagBadge : ''}
+        {searchTag ? searchTagBadge : ''}
         <ul className="tags-container">
           <FlipMove duration={150} easing="ease-out">
             {this.props.tags.map((tag: Tag, index: number) => (
               <li key={index}>
-                <button onClick={() => this.selectTag(tag)}>{tag.name}</button>
+                <button onClick={() => this.searchByTag(tag)}>{tag.name}</button>
                 <div className="tag-del">
                   <MdDelete onClick={() => this.onDelTag(tag.id)}/>
                 </div>

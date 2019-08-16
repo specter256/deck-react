@@ -43,3 +43,14 @@ button, span {
   -ms-user-select: none;
   user-select: none;
 }
+
+input {
+  padding: 5px;
+  font-size: 12px;
+  font-family: var(--font-family);
+  background-color: var(--b_dark);
+  color: var(--f_medium);
+  border: 1px solid var(--b_light);
+  width: 100%;
+  box-sizing: border-box;
+}

@@ -1,12 +1,14 @@
+import { AppState } from 'store/reducers/root';
 import { createSelector } from 'reselect';
 
 import { Note, Tag } from 'interfaces/interfaces';
 
-const getNotes = (state: any) => state.fetchNotes.items
-const getSelectedTag = (state: any) => state.common.selectedTag
+const getNotes = (state: AppState) => state.fetchNotes.items
+const getSearchTag = (state: AppState) => state.common.search.tag
+const getSearchText = (state: AppState) => state.common.search.text
 
-export const getFilteredNotes = createSelector(
-  [getNotes, getSelectedTag],
+export const filterByTag = createSelector(
+  [getNotes, getSearchTag],
   (notes: Note[], tag: Tag) => {
     if (!tag) {
       return notes;
@@ -18,4 +20,24 @@ export const getFilteredNotes = createSelector(
 
     return filteredNotes;
   }
+);
+
+export const filterByText = createSelector(
+  [getNotes, getSearchText],
+  (notes: Note[], text: string) => {
+    if (!text) {
+      return notes;
+    }
+
+    const filteredNotes = notes.filter((note: Note) => {
+      return note.text.toLowerCase().includes(text.toLowerCase());
+    });
+
+    return filteredNotes;
+  }
+);
+
+export const getFilteredNotes = createSelector(
+  [filterByTag, filterByText],
+  (byTag, byText) => byTag.filter(value => -1 !== byText.indexOf(value))
 );

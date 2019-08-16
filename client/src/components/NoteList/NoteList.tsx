@@ -10,7 +10,7 @@ type NoteListProps = {
   fetchNotes: () => Promise<void>;
   fetchNote: () => Promise<void>;
   delNote: (data: any) => Promise<any>;
-  selectTag: (tag?: Tag) => void;
+  searchByTag: (tag?: Tag) => void;
   notes: Note[];
   selectedNote: Note;
 }
@@ -46,7 +46,7 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
               fetchNote={this.props.fetchNote}
               fetchNotes={this.props.fetchNotes}
               delNote={this.onDelNote}
-              selectTag={this.props.selectTag}/>
+              searchByTag={this.props.searchByTag}/>
           ))}
         </FlipMove>
       </div>

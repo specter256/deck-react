@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { MdSave, MdAddBox } from 'react-icons/md';
 
 import { Note } from 'interfaces/interfaces';
@@ -10,6 +10,7 @@ type ControlBarProps = {
   updNote: () => void;
   toggleEditMode: () => void;
   clearSelectedNote: () => void;
+  searchByText: (text?: string) => void;
   editMode: boolean;
   selectedNote: Note;
 }
@@ -18,11 +19,14 @@ type ControlBarState = {
 }
 
 export default class ControlBar extends React.Component<ControlBarProps, ControlBarState> {
+  searchInput: any;
+
   constructor(props: ControlBarProps) {
     super(props);
     this.onNewNote = this.onNewNote.bind(this);
     this.onSaveNote = this.onSaveNote.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
+    this.handleChangeSearchInput = this.handleChangeSearchInput.bind(this);
   }
 
   onNewNote() {
@@ -39,6 +43,10 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
 
   toggleEditMode() {
     this.props.toggleEditMode()
+  }
+
+  handleChangeSearchInput(event: ChangeEvent<HTMLInputElement>) {
+    this.props.searchByText(event.target.value);
   }
 
   render() {
@@ -58,6 +66,13 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
           title="Save note">
           <MdSave/>
         </button>
+        <div className="input-container">
+          <input
+            type="text"
+            ref={(ref) => this.searchInput = ref}
+            placeholder="Search"
+            onChange={this.handleChangeSearchInput}/>
+        </div>
       </div>
     );
   }
