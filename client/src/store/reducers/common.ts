@@ -1,9 +1,11 @@
 import {
   TOGGLE_EDIT_MODE,
+  SELECT_TAG,
 } from 'store/actions/common';
 
 const initialState = {
-  editMode: true
+  editMode: true,
+  selectedTag: null,
 };
 
 export const common = (state = initialState, action: any) => {
@@ -12,6 +14,11 @@ export const common = (state = initialState, action: any) => {
       return {
         ...state,
         editMode: !state.editMode
+      };
+    case SELECT_TAG:
+      return {
+        ...state,
+        selectedTag: action.tag
       };
 
     default:

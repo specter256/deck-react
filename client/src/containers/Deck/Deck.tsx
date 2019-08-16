@@ -15,8 +15,9 @@ import { fetchTags } from 'store/actions/tags/fetch_tags';
 import { addTag } from 'store/actions/tags/add_tag';
 import { delTag } from 'store/actions/tags/del_tag';
 import { AppState } from 'store/reducers/root';
-import { toggleEditMode } from 'store/actions/common';
+import { toggleEditMode, selectTag } from 'store/actions/common';
 import { fetchNote, clearSelectedNote } from 'store/actions/notes/fetch_note';
+import { getFilteredNotes } from 'store/selectors/index';
 
 import './Deck.scss';
 
@@ -31,10 +32,12 @@ type DeckProps = {
   delTag: () => Promise<void>;
   toggleEditMode: () => void;
   clearSelectedNote: () => void;
+  selectTag: () => Promise<void>;
   editMode: boolean;
   selectedNote: Note;
   notes: Note[];
   tags: Tag[];
+  selectedTag: Tag;
 }
 
 type DeckState = {
@@ -46,13 +49,6 @@ class Deck extends React.Component<DeckProps, DeckState> {
     themes.init();
     this.props.fetchNotes();
     this.props.fetchTags();
-  }
-
-  fetchNotes = () => {
-    this.props.fetchNotes();
-  }
-
-  fetchImages = () => {
   }
 
   render() {
@@ -69,7 +65,9 @@ class Deck extends React.Component<DeckProps, DeckState> {
             fetchTags={this.props.fetchTags}
             addTag={this.props.addTag}
             delTag={this.props.delTag}
-            fetchNotes={this.props.fetchNotes}/>
+            fetchNotes={this.props.fetchNotes}
+            selectTag={this.props.selectTag}
+            selectedTag={this.props.selectedTag}/>
           <SplitPane
             split="vertical"
             minSize={300}
@@ -81,7 +79,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
               selectedNote={this.props.selectedNote}
               fetchNotes={this.props.fetchNotes}
               fetchNote={this.props.fetchNote}
-              delNote={this.props.delNote}/>
+              delNote={this.props.delNote}
+              selectTag={this.props.selectTag}/>
             <NoteContent
               tags={this.props.tags}
               toggleEditMode={this.props.toggleEditMode}
@@ -99,10 +98,11 @@ class Deck extends React.Component<DeckProps, DeckState> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  notes: state.fetchNotes.items,
+  notes: getFilteredNotes(state),
   tags: state.fetchTags.items,
   editMode: state.common.editMode,
   selectedNote: state.fetchNote.data,
+  selectedTag: state.common.selectedTag
 });
 
 const mapDispatchToProps = {
@@ -116,6 +116,7 @@ const mapDispatchToProps = {
   addTag,
   delTag,
   toggleEditMode,
+  selectTag,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);

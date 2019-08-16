@@ -6,6 +6,6 @@
   <rect x='20' y='20' width='20' height="20" id='f_medium' fill='#9fafaf'></rect>
   <rect x='40' y='20' width='20' height="20" id='f_light' fill='#D2D2D2'></rect>
   <rect x='0' y='40' width='20' height="20" id='accent_1' fill='#F27280'></rect>
-  <rect x='20' y='40' width='20' height="20" id='accent_2' fill='#EE5622'></rect>
+  <rect x='20' y='40' width='20' height="20" id='accent_2' fill='#49348c'></rect>
   <rect x='40' y='40' width='20' height="20" id='accent_3' fill='#FDCEA9'></rect>
 </svg>

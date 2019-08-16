@@ -4,12 +4,13 @@ import FlipMove from 'react-flip-move';
 import NoteItem from 'components/NoteItem/NoteItem';
 
 import './NoteList.scss';
-import { Note } from 'interfaces/interfaces';
+import { Note, Tag } from 'interfaces/interfaces';
 
 type NoteListProps = {
   fetchNotes: () => Promise<void>;
   fetchNote: () => Promise<void>;
   delNote: (data: any) => Promise<any>;
+  selectTag: (tag?: Tag) => void;
   notes: Note[];
   selectedNote: Note;
 }
@@ -44,7 +45,8 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
               selectedNote={this.props.selectedNote}
               fetchNote={this.props.fetchNote}
               fetchNotes={this.props.fetchNotes}
-              delNote={this.onDelNote}/>
+              delNote={this.onDelNote}
+              selectTag={this.props.selectTag}/>
           ))}
         </FlipMove>
       </div>

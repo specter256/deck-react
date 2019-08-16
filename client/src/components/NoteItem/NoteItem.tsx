@@ -9,6 +9,7 @@ type NoteItemProps = {
   fetchNotes: () => Promise<void>;
   fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
+  selectTag: (tag?: Tag) => void;
   data: Note;
   selectedNote: Note;
 }
@@ -59,6 +60,10 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
     return '';
   }
 
+  selectTag(tag?: Tag) {
+    this.props.selectTag(tag);
+  }
+
   render() {
     const delIcon =
       <div className="item-del">
@@ -84,7 +89,12 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
           </div>
           <div className="item-tag-list">
             {this.props.data.tags.map((tag: Tag, index: number) => (
-              <span className="item-tag" key={index}>{tag.name}</span>
+              <span
+                className="item-tag"
+                onClick={() => this.selectTag(tag)}
+                key={index}>
+                {tag.name}
+              </span>
             ))}
           </div>
         </div>

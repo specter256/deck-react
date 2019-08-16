@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdNote, MdImage, MdDelete } from "react-icons/md";
+import { MdNote, MdImage, MdDelete, MdClose } from "react-icons/md";
 import FlipMove from 'react-flip-move';
 
 import { Tag } from 'interfaces/interfaces';
@@ -11,7 +11,9 @@ type TagListProps = {
   addTag: (data: any) => Promise<void>;
   delTag: (data: any) => Promise<void>;
   fetchNotes: () => Promise<void>;
+  selectTag: (tag?: Tag) => void;
   tags: Tag[];
+  selectedTag: Tag;
 }
 
 type TagListState = {
@@ -43,8 +45,8 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     }
   }
 
-  selectTag(id: number) {
-
+  selectTag(tag?: Tag) {
+    this.props.selectTag(tag);
   }
 
   onDelTag(id: number) {
@@ -57,6 +59,14 @@ export default class TagList extends React.Component<TagListProps, TagListState>
   }
 
   render() {
+    const { selectedTag } = this.props;
+
+    const selectedTagBadge =
+      <div className="selected-tag-badge" onClick={() => this.selectTag()}>
+        <span className="label">{selectedTag ? selectedTag.name : ''}</span>
+        <MdClose/>
+      </div>
+
     return (
       <div className="tag-list">
         <div className="input-container">
@@ -74,11 +84,12 @@ export default class TagList extends React.Component<TagListProps, TagListState>
             <MdImage/><button onClick={() => this.fetchImages()}>Images</button>
           </li>
         </ul>
+        {selectedTag ? selectedTagBadge : ''}
         <ul className="tags-container">
           <FlipMove duration={150} easing="ease-out">
             {this.props.tags.map((tag: Tag, index: number) => (
               <li key={index}>
-                <button onClick={() => this.selectTag(tag.id)}>{tag.name}</button>
+                <button onClick={() => this.selectTag(tag)}>{tag.name}</button>
                 <div className="tag-del">
                   <MdDelete onClick={() => this.onDelTag(tag.id)}/>
                 </div>
