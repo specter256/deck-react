@@ -254,7 +254,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             allowResize={false}
             minSize={75}
             defaultSize={75}
-            resizerStyle={{ background: 'none' }}>
+            resizerStyle={{ background: 'none' }}
+            pane2Style={{ overflow: 'auto' }}>
             <ControlBar
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}

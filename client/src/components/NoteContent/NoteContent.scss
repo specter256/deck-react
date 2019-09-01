@@ -1,10 +1,12 @@
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .editor-folder {
   height: 100%;
   padding: 0 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .images-folder {
@@ -36,10 +38,6 @@ textarea {
   border: none;
   height: 100%;
   line-height: var(--line-height);
-}
-
-::-webkit-scrollbar {
-  cursor:pointer;
 }
 
 textarea::-webkit-scrollbar {

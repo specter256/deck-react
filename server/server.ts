@@ -1,6 +1,6 @@
 import express  from 'express';
 import bodyParser from 'body-parser';
-import { createConnection } from "typeorm";
+import { createConnection } from 'typeorm';
 
 import notes from './routes/notes';
 import tags from './routes/tags';

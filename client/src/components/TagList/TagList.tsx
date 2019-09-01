@@ -35,9 +35,6 @@ export default class TagList extends React.Component<TagListProps, TagListState>
   }
 
   fetchImages() {
-    this.props.fetchImages().then((images) => {
-      console.log(images);
-    });
     this.props.setFolder('images');
   }
 

@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { getRepository, getConnection } from "typeorm";
 
 import { Image } from "../entity/image";
@@ -14,6 +15,11 @@ router.get('/', (req, res) => {
     .then(data => {
       res.json(data);
     });
+});
+
+router.get('/:path', (req, res) => {
+  const imagesDir = path.join(__dirname, '../database/images');
+  res.sendFile(path.join(imagesDir, req.params.path));
 });
 
 router.post('/add', async (req, res) => {

@@ -87,7 +87,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
               fetchNotes={this.props.fetchNotes}
               fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}
-              searchByTag={this.props.searchByTag}/>
+              searchByTag={this.props.searchByTag}
+              setFolder={this.props.setFolder}/>
             <NoteContent
               folder={this.props.folder}
               tags={this.props.tags}

@@ -10,6 +10,7 @@ type NoteItemProps = {
   fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
   searchByTag: (tag?: Tag) => void;
+  setFolder: (folder: string) => void;
   data: Note;
   selectedNote: Note;
 }
@@ -34,6 +35,7 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
 
   onSelectNote() {
     this.props.fetchNote(this.props.data.id);
+    this.props.setFolder('notes');
   }
 
   onDelNote() {
@@ -84,9 +86,6 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
           <div className="item-text">
             {this.props.data.text}
           </div>
-          <div className="item-update-date">
-            {this.props.data.update_date}
-          </div>
           <div className="item-tag-list">
             {this.props.data.tags.map((tag: Tag, index: number) => (
               <span
@@ -96,6 +95,9 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
                 {tag.name}
               </span>
             ))}
+          </div>
+          <div className="item-update-date">
+            {this.props.data.update_date}
           </div>
         </div>
         <div className="item-right-col">

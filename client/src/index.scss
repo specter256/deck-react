@@ -17,6 +17,10 @@
   background-color: var(--f_light);
 }
 
+::-webkit-scrollbar {
+  cursor:pointer;
+}
+
 body {
   height: 100vh;
   margin: 0;
