@@ -14,7 +14,7 @@
 }
 
 ::selection {
-  background-color: var(--f_light);
+  background-color: var(--text_4);
 }
 
 ::-webkit-scrollbar {
@@ -28,13 +28,12 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
-  background-color: var(--b_dark);
-  color: var(--f_medium);
+  color: var(--text_2);
 }
 
 button, span {
   font-family: var(--font-family);
-  color: var(--f_dark);
+  color: var(--text_1);
   text-decoration: none;
   background-color: transparent;
   border: none;
@@ -52,9 +51,7 @@ input {
   padding: 5px;
   font-size: 12px;
   font-family: var(--font-family);
-  background-color: var(--b_dark);
-  color: var(--f_medium);
-  border: 1px solid var(--b_light);
+  color: var(--text_2);
   width: 100%;
   box-sizing: border-box;
 }

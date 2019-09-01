@@ -234,15 +234,16 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
           borderRadius: 0,
           colors: {
             ...theme.colors,
-            neutral0: 'var(--b_medium)',
-            neutral20: 'var(--b_dark)',
-            neutral30: 'var(--b_dark)',
-            primary: 'var(--b_dark)',
-            primary25: 'var(--b_light)',
-            primary50: 'var(--b_dark)',
-            dangerLight: 'var(--accent_1)',
-            neutral10: 'var(--b_light)',
-            neutral80: 'var(--f_medium)',
+            neutral0: 'var(--p3_secondary)',  // combo background
+            neutral20: 'var(--p3_secondary)', // combo border
+            neutral30: 'var(--p3_secondary)', // combo border on hover
+            primary: 'var(--p3_secondary)',   // combo border on focus
+            primary25: 'var(--p3_borders)',   // combo item background on hover
+            primary50: 'var(--p3_borders)',   // combo item background on click
+            danger: 'var(--p3_accent)',       // delete icon on hover
+            dangerLight: 'var(--p3_borders)', // delete button background on hover
+            neutral10: 'var(--p3_borders)',   // selected tag background
+            neutral80: 'var(--text_2)',       // combo text color
           },
         })}/>
 

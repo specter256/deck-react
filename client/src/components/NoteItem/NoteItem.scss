@@ -1,7 +1,7 @@
 .item-container {
   min-height: 120px;
   display: flex;
-  border-bottom: 1px solid var(--b_light);
+  border-bottom: 1px solid var(--p2_borders);
   padding: 5px 0px 5px 20px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -11,7 +11,7 @@
 
   &:hover, &.selected {
     cursor: pointer;
-    background-color: var(--b_dark);
+    background-color: var(--p2_secondary);
     // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
     // -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
     // box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
@@ -30,7 +30,7 @@
 .item-right-col {
   width: 26px;
   font-size: 20px;
-  color: var(--f_dark);
+  color: var(--text_2);
   padding-right: 2px;
   visibility: hidden;
 
@@ -39,20 +39,20 @@
   }
 
   svg:hover {
-    color: var(--accent_1);
+    color: var(--p2_accent);
   }
 }
 
 .item-text {
   height: 80px;
-  color: var(--f_medium);
+  color: var(--text_2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre;
 }
 
 .item-update-date {
-  color: var(--f_dark);
+  color: var(--text_2);
 }
 
 .item-tag-list {
@@ -65,6 +65,6 @@
   padding-right: 5px;
 
   &:hover {
-    color: var(--accent_1);
+    color: var(--p2_accent);
   }
 }

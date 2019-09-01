@@ -27,15 +27,22 @@ module.exports = {
     style.id = 'themeStyle';
     style.innerHTML = `
       :root {
-        --b_dark: ${theme.b_dark};
-        --b_medium: ${theme.b_medium};
-        --b_light: ${theme.b_light};
-        --f_dark: ${theme.f_dark};
-        --f_medium: ${theme.f_medium};
-        --f_light: ${theme.f_light};
-        --accent_1: ${theme.accent_1};
-        --accent_2: ${theme.accent_2};
-        --accent_3: ${theme.accent_3};
+        --p1_primary: ${theme.p1_primary};
+        --p1_secondary: ${theme.p1_secondary};
+        --p1_borders: ${theme.p1_borders};
+        --p1_accent: ${theme.p1_accent};
+        --p2_primary: ${theme.p2_primary};
+        --p2_secondary: ${theme.p2_secondary};
+        --p2_borders: ${theme.p2_borders};
+        --p2_accent: ${theme.p2_accent};
+        --p3_primary: ${theme.p3_primary};
+        --p3_secondary: ${theme.p3_secondary};
+        --p3_borders: ${theme.p3_borders};
+        --p3_accent: ${theme.p3_accent};
+        --text_1: ${theme.text_1};
+        --text_2: ${theme.text_2};
+        --text_3: ${theme.text_3};
+        --text_4: ${theme.text_4};
       }
     `;
 
@@ -67,15 +74,22 @@ module.exports = {
     const parser = new DOMParser();
     const svg = parser.parseFromString(str, 'image/svg+xml');
     const json = {
-      b_dark: svg.getElementById('b_dark').getAttribute('fill'),
-      b_medium: svg.getElementById('b_medium').getAttribute('fill'),
-      b_light: svg.getElementById('b_light').getAttribute('fill'),
-      f_dark: svg.getElementById('f_dark').getAttribute('fill'),
-      f_medium: svg.getElementById('f_medium').getAttribute('fill'),
-      f_light: svg.getElementById('f_light').getAttribute('fill'),
-      accent_1: svg.getElementById('accent_1').getAttribute('fill'),
-      accent_2: svg.getElementById('accent_2').getAttribute('fill'),
-      accent_3: svg.getElementById('accent_3').getAttribute('fill'),
+      p1_primary: svg.getElementById('p1_primary').getAttribute('fill'),
+      p1_secondary: svg.getElementById('p1_secondary').getAttribute('fill'),
+      p1_borders: svg.getElementById('p1_borders').getAttribute('fill'),
+      p1_accent: svg.getElementById('p1_accent').getAttribute('fill'),
+      p2_primary: svg.getElementById('p2_primary').getAttribute('fill'),
+      p2_secondary: svg.getElementById('p2_secondary').getAttribute('fill'),
+      p2_borders: svg.getElementById('p2_borders').getAttribute('fill'),
+      p2_accent: svg.getElementById('p2_accent').getAttribute('fill'),
+      p3_primary: svg.getElementById('p3_primary').getAttribute('fill'),
+      p3_secondary: svg.getElementById('p3_secondary').getAttribute('fill'),
+      p3_borders: svg.getElementById('p3_borders').getAttribute('fill'),
+      p3_accent: svg.getElementById('p3_accent').getAttribute('fill'),
+      text_1: svg.getElementById('text_1').getAttribute('fill'),
+      text_2: svg.getElementById('text_2').getAttribute('fill'),
+      text_3: svg.getElementById('text_3').getAttribute('fill'),
+      text_4: svg.getElementById('text_4').getAttribute('fill'),
     };
 
     return json;

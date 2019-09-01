@@ -1,0 +1,21 @@
+<svg width="80px" height="80px" xmlns="http://www.w3.org/2000/svg">
+  <rect x='0' y='0' width='20' height="20" id='p1_primary' fill='#1b1b1b'></rect>
+  <rect x='20' y='0' width='20' height="20" id='p1_secondary' fill='#333333'></rect>
+  <rect x='40' y='0' width='20' height="20" id='p1_borders' fill='#333333'></rect>
+  <rect x='60' y='0' width='20' height="20" id='p1_accent' fill='#49348c'></rect>
+
+  <rect x='0' y='20' width='20' height="20" id='p2_primary' fill='#1f1f1f'></rect>
+  <rect x='20' y='20' width='20' height="20" id='p2_secondary' fill='#1b1b1b'></rect>
+  <rect x='40' y='20' width='20' height="20" id='p2_borders' fill='#333333'></rect>
+  <rect x='60' y='20' width='20' height="20" id='p2_accent' fill='#F27280'></rect>
+
+  <rect x='0' y='40' width='20' height="20" id='p3_primary' fill='#1b1b1b'></rect>
+  <rect x='20' y='40' width='20' height="20" id='p3_secondary' fill='#1f1f1f'></rect>
+  <rect x='40' y='40' width='20' height="20" id='p3_borders' fill='#333333'></rect>
+  <rect x='60' y='40' width='20' height="20" id='p3_accent' fill='#F27280'></rect>
+
+  <rect x='0' y='60' width='20' height="20" id='text_1' fill='#4B7676'></rect>
+  <rect x='20' y='60' width='20' height="20" id='text_2' fill='#9fafaf'></rect>
+  <rect x='40' y='60' width='20' height="20" id='text_3' fill='#D2D2D2'></rect>
+  <rect x='60' y='60' width='20' height="20" id='text_4' fill='#D2D2D2'></rect>
+</svg>

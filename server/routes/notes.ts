@@ -69,6 +69,10 @@ router.delete('/del', async (req, res) => {
 });
 
 const parseTags = (data: any) => {
+  if (data === null) {
+    return null;
+  }
+
   const tags = data.map((tag: any) => {
     return {
       id: tag.value,

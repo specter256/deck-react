@@ -64,7 +64,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
           minSize={200}
           defaultSize={200}
           allowResize={false}
-          resizerStyle={{ background: 'none' }}>
+          resizerStyle={{ background: 'var(--p1_primary)' }}>
           <TagList
             tags={this.props.tags}
             fetchTags={this.props.fetchTags}
@@ -80,7 +80,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
             minSize={300}
             defaultSize={300}
             allowResize={false}
-            resizerStyle={{ background: 'none' }}>
+            resizerStyle={{ background: 'var(--p2_primary)' }}>
             <NoteList
               notes={this.props.notes}
               selectedNote={this.props.selectedNote}

@@ -12,14 +12,16 @@
 .control-bar input {
   height: 100%;
   font-size: 24px;
+  background-color: var(--p3_primary);
+  border: 1px solid var(--p3_borders);
 }
 
 .control-bar button {
   padding: 10px;
-  background-color: var(--b_medium);
+  background-color: var(--p3_secondary);
   border: none;
   outline: none;
-  color: var(--f_dark);
+  color: var(--text_1);
   float: left;
   height: 50px;
   width: 50px;
@@ -32,11 +34,11 @@
 }
 
 .control-bar button:hover {
-  background-color: var(--b_light);
-  color: var(--f_medium);
+  background-color: var(--p3_borders);
+  color: var(--text_2);
   cursor: pointer;
 }
 
 .control-bar button:active {
-  background-color: var(--b_medium);
+  background-color: var(--p3_secondary);
 }

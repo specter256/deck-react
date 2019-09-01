@@ -1,6 +1,6 @@
 .note-list {
   height: 100vh;
-  background-color: var(--b_medium);
+  background-color: var(--p2_primary);
   // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
   // -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
   // box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
@@ -15,6 +15,7 @@
 }
 
 .note-list {
+  color: var(--text_2);
   overflow: auto;
   height: 100%;
   overflow: -moz-scrollbars-none;
@@ -27,11 +28,11 @@
 
   &:hover::-webkit-scrollbar {
     width: 6px;
-    background-color: var(--b_dark);
-    cursor:pointer;
+    background-color: var(--p2_primary);
+    cursor: pointer;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: var(--b_light);
+    background-color: var(--p2_borders);
   }
 }
