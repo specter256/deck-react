@@ -6,7 +6,7 @@ import TagList from 'components/TagList/TagList';
 import NoteList from 'components/NoteList/NoteList';
 import NoteContent from 'components/NoteContent/NoteContent';
 import { Note, Tag, Image } from 'interfaces/interfaces';
-import * as themes from 'utils/themes';
+import { Themes } from 'utils/themes';
 import { AppState } from 'store/reducers/root';
 import { fetchNotes } from 'store/actions/notes/fetch_notes';
 import { addNote } from 'store/actions/notes/add_note';
@@ -51,7 +51,7 @@ type DeckState = {}
 class Deck extends React.Component<DeckProps, DeckState> {
   constructor(props: any) {
     super(props);
-    themes.init();
+    Themes.init();
     this.props.fetchNotes();
     this.props.fetchTags();
   }
