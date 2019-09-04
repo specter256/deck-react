@@ -3,6 +3,7 @@ import {
   FETCH_IMAGES_SUCCESS,
   FETCH_IMAGES_FAILURE
 } from 'store/actions/images/fetch_images';
+import { Image } from 'interfaces/interfaces';
 
 const initialState = {
   items: [],
@@ -20,10 +21,19 @@ export const fetchImages = (state = initialState, action: any) => {
       };
 
     case FETCH_IMAGES_SUCCESS:
+      const images: any = [];
+      action.payload.images.forEach((image: Image) => {
+        images.push({
+          src: `api/images/${image.filename}`,
+          width: 1,
+          height: 1,
+        });
+      });
+
       return {
         ...state,
         loading: false,
-        items: action.payload.images
+        items: images
       };
 
     case FETCH_IMAGES_FAILURE:

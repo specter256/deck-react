@@ -5,7 +5,7 @@ import makeAnimated from 'react-select/animated';
 
 import ControlBar from 'components/ControlBar/ControlBar';
 import Images from 'components/Images/Images';
-import { Note, Tag, Image } from 'interfaces/interfaces';
+import { Note, Tag } from 'interfaces/interfaces';
 import { store } from 'store/store';
 import { Editor } from 'utils/editor';
 
@@ -22,12 +22,11 @@ type NoteContentProps = {
   toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: () => void;
-  fetchImages: () => Promise<void>;
   folder: string;
   editMode: boolean;
   selectedNote: Note;
   tags: Tag[];
-  images: Image[];
+  images: any[];
 }
 
 type NoteContentState = {
@@ -273,8 +272,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               </div>
               <div className={"images-folder " + this.isFolderHidden('images')}>
                 <Images
-                  images={this.props.images}
-                  fetchImages={this.props.fetchImages}/>
+                  images={this.props.images}/>
               </div>
             </div>
           </SplitPane>

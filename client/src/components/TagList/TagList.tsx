@@ -13,7 +13,7 @@ type TagListProps = {
   delTag: (data: any) => Promise<void>;
   fetchNotes: () => Promise<void>;
   searchByTag: (tag?: Tag) => void;
-  fetchImages: () => Promise<void>;
+  fetchImages: () => Promise<any[]>;
   tags: Tag[];
   searchTag: Tag;
 }
@@ -29,12 +29,13 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  fetchNotes() {
+  showNotes() {
     this.props.fetchNotes();
     this.props.setFolder('notes');
   }
 
-  fetchImages() {
+  showImages() {
+    this.props.fetchImages();
     this.props.setFolder('images');
   }
 
@@ -82,10 +83,10 @@ export default class TagList extends React.Component<TagListProps, TagListState>
         </div>
         <ul>
           <li className="fixed">
-            <MdNote/><button onClick={() => this.fetchNotes()}>Notes</button>
+            <MdNote/><button onClick={() => this.showNotes()}>Notes</button>
           </li>
           <li className="fixed">
-            <MdImage/><button onClick={() => this.fetchImages()}>Images</button>
+            <MdImage/><button onClick={() => this.showImages()}>Images</button>
           </li>
         </ul>
         {searchTag ? searchTagBadge : ''}

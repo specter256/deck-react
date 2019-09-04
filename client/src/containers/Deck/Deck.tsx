@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import TagList from 'components/TagList/TagList';
 import NoteList from 'components/NoteList/NoteList';
 import NoteContent from 'components/NoteContent/NoteContent';
-import { Note, Tag, Image } from 'interfaces/interfaces';
+import { Note, Tag } from 'interfaces/interfaces';
 import { Themes } from 'utils/themes';
+import { ImageUploader } from 'utils/imageUploader';
 import { AppState } from 'store/reducers/root';
 import { fetchNotes } from 'store/actions/notes/fetch_notes';
 import { addNote } from 'store/actions/notes/add_note';
@@ -36,14 +37,14 @@ type DeckProps = {
   searchByTag: () => void;
   searchByText: () => void;
   setFolder: () => void;
-  fetchImages: () => Promise<void>;
+  fetchImages: () => Promise<any[]>;
   folder: string;
   editMode: boolean;
   selectedNote: Note;
   notes: Note[];
   tags: Tag[];
   searchTag: Tag;
-  images: Image[];
+  images: any[];
 }
 
 type DeckState = {}
@@ -52,7 +53,9 @@ class Deck extends React.Component<DeckProps, DeckState> {
   constructor(props: any) {
     super(props);
     Themes.init();
+    ImageUploader.init(this.props.fetchImages);
     this.props.fetchNotes();
+    this.props.fetchImages();
     this.props.fetchTags();
   }
 
@@ -100,7 +103,6 @@ class Deck extends React.Component<DeckProps, DeckState> {
               addNote={this.props.addNote}
               updNote={this.props.updNote}
               editMode={this.props.editMode}
-              fetchImages={this.props.fetchImages}
               images={this.props.images}/>
           </SplitPane>
         </SplitPane>

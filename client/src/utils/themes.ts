@@ -60,6 +60,11 @@ export class Themes {
     if (event === null || event.dataTransfer === null) { return; }
 
     const file = event.dataTransfer.files[0];
+
+    if (file.type !== 'image/svg+xml') {
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.onload = (e: Event) => {

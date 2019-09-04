@@ -1,11 +1,23 @@
 import express from 'express';
 import path from 'path';
-import { getRepository, getConnection } from "typeorm";
+import { getRepository, getConnection } from 'typeorm';
+import multer from 'multer';
+import mime from 'mime-types';
+import fs from 'fs';
 
-import { Image } from "../entity/image";
+import { Image } from '../entity/image';
 import Utils from '../utils/utils';
 
 const router: express.Router = express.Router();
+const imagesDir = path.join(__dirname, '../database/images');
+const storage = multer.diskStorage({
+  destination: imagesDir,
+  filename: function (req, file, callback) {
+    const timestamp = +new Date();
+    callback(null, `${timestamp.toString()}.${mime.extension(file.mimetype)}`);
+  }
+});
+const upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
   getRepository(Image)
@@ -18,20 +30,34 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:path', (req, res) => {
-  const imagesDir = path.join(__dirname, '../database/images');
   res.sendFile(path.join(imagesDir, req.params.path));
 });
 
-router.post('/add', async (req, res) => {
-  const data = req.body;
-  const currentDate = Utils.getCurrentDate();
+router.post('/upload', upload.single('image'), async (req, res) => {
+  if (!req.file) {
+    console.log('Error while uploading file: file not received.');
+    return res.send({ status: 500 });
+  } else {
+    try {
+      const currentDate = Utils.getCurrentDate();
+      const note = new Image();
+      note.filename = req.file.filename;
+      note.create_date = currentDate;
+      await getConnection().manager.save(note);
 
-  const note = new Image();
-  note.filename = data.filename;
-  note.create_date = currentDate;
-  await getConnection().manager.save(note);
+      console.log(`File uploaded: ${req.file.filename}`);
+      return res.send({ status: 200 });
+    } catch(error) {
+      // Delete file if saving to database fails
+      if (fs.existsSync(req.file.path)) {
+        fs.unlink(req.file.path, (err) => {
+          if (err) { console.log(err); }
+        });
+      }
 
-  res.json({status: 200});
+      return console.log('Error while saving image in database:\n', error);
+    }
+  }
 });
 
 router.delete('/del', async (req, res) => {
