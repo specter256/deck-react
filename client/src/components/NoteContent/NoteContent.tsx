@@ -12,13 +12,16 @@ import { Editor } from 'utils/editor';
 import './NoteContent.scss';
 
 const MarkdownIt = require('markdown-it');
-const md = new MarkdownIt();
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+});
 const animatedComponents = makeAnimated();
 
 type NoteContentProps = {
   addNote: (data: any) => Promise<any>;
   updNote: (data: any) => Promise<any>;
-  fetchNotes: () => Promise<void>;
+  fetchNotes: () => Promise<Note[]>;
   toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: () => void;
@@ -68,7 +71,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       return state.fetchTags.items;
     }
 
-    this.editor = new Editor(this.refs.editor);
+    this.editor = new Editor(this.refs.editor, this.handleChangeEditor);
     this.observeStore(store, selectedItemSelector, this.onChangeSelectedItem);
     this.observeStore(store, tagsSelector, this.onChangeTags);
   }
@@ -98,6 +101,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       return;
     }
 
+    this.editor.setValue(currState.text);
     this.setState({
       value: currState.text,
       markdown: md.render(currState.text),
@@ -169,10 +173,10 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     });
   }
 
-  handleChangeEditor(event: any) {
+  handleChangeEditor() {
     this.setState({
-      value: event.target.value,
-      markdown: md.render(event.target.value),
+      value: this.editor.getValue(),
+      markdown: md.render(this.editor.getValue()),
     });
   }
 
@@ -207,8 +211,6 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       <textarea
         className={this.isEditorHidden()}
         ref="editor"
-        value={this.state.value}
-        onChange={this.handleChangeEditor}
         onKeyDown={this.handleKeyDownEditor}>
       </textarea>
 

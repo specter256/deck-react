@@ -24,8 +24,8 @@ import { fetchImages } from 'store/actions/images/fetch_images';
 import './Deck.scss';
 
 type DeckProps = {
-  fetchNotes: () => Promise<void>;
-  fetchNote: () => Promise<void>;
+  fetchNotes: () => Promise<Note[]>;
+  fetchNote: (id: number) => Promise<void>;
   addNote: () => Promise<void>;
   updNote: () => Promise<void>;
   delNote: () => Promise<void>;
@@ -54,7 +54,12 @@ class Deck extends React.Component<DeckProps, DeckState> {
     super(props);
     Themes.init();
     ImageUploader.init(this.props.fetchImages);
-    this.props.fetchNotes();
+    this.props.fetchNotes()
+      .then((notes: Note[]) => {
+        if (notes.length > 0) {
+          this.props.fetchNote(notes[0].id);
+        }
+      });
     this.props.fetchImages();
     this.props.fetchTags();
   }

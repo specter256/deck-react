@@ -7,8 +7,8 @@ import './NoteList.scss';
 import { Note, Tag } from 'interfaces/interfaces';
 
 type NoteListProps = {
-  fetchNotes: () => Promise<void>;
-  fetchNote: () => Promise<void>;
+  fetchNotes: () => Promise<Note[]>;
+  fetchNote: (id: number) => Promise<void>;
   delNote: (data: any) => Promise<any>;
   searchByTag: (tag?: Tag) => void;
   setFolder: (folder: string) => void;

@@ -2,7 +2,7 @@ import React from 'react';
 import { MdNote, MdImage, MdDelete, MdClose } from "react-icons/md";
 import FlipMove from 'react-flip-move';
 
-import { Tag } from 'interfaces/interfaces';
+import { Tag, Note } from 'interfaces/interfaces';
 
 import './TagList.scss';
 
@@ -11,7 +11,7 @@ type TagListProps = {
   fetchTags: () => Promise<void>;
   addTag: (data: any) => Promise<void>;
   delTag: (data: any) => Promise<void>;
-  fetchNotes: () => Promise<void>;
+  fetchNotes: () => Promise<Note[]>;
   searchByTag: (tag?: Tag) => void;
   fetchImages: () => Promise<any[]>;
   tags: Tag[];

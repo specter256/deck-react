@@ -6,7 +6,7 @@ import { Note, Tag } from 'interfaces/interfaces';
 import './NoteItem.scss';
 
 type NoteItemProps = {
-  fetchNotes: () => Promise<void>;
+  fetchNotes: () => Promise<Note[]>;
   fetchNote: (id: number) => Promise<void>;
   delNote: (id: number) => void;
   searchByTag: (tag?: Tag) => void;
