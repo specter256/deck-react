@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
     .leftJoinAndSelect('note.tags', 'tag')
     .getMany()
     .then(data => {
+      data.map(i => i.update_date = Utils.formatDate(i.update_date));
       res.json(data);
     });
 });
