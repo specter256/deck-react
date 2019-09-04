@@ -15,7 +15,9 @@ export default class Images extends React.Component<ImagesProps, ImagesState> {
     let gallery;
 
     if (this.props.images.length > 0) {
-      gallery = <Gallery photos={this.props.images} direction={"column"}/>;
+      gallery = <Gallery
+                  photos={this.props.images}
+                  direction={"column"}/>;
     }
 
     return (

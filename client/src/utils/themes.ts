@@ -61,7 +61,7 @@ export class Themes {
 
     const file = event.dataTransfer.files[0];
 
-    if (file.type !== 'image/svg+xml') {
+    if (!file || file.type !== 'image/svg+xml') {
       return;
     }
 

@@ -21,7 +21,7 @@ export class ImageUploader {
     const imageTypes = ['image/png', 'image/gif', 'image/jpg', 'image/jpeg'];
     const reader = new FileReader();
 
-    if (!imageTypes.includes(file.type)) {
+    if (!file || !imageTypes.includes(file.type)) {
       return;
     }
 
