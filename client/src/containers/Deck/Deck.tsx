@@ -33,7 +33,7 @@ type DeckProps = {
   fetchTags: () => Promise<void>;
   addTag: () => Promise<void>;
   delTag: () => Promise<void>;
-  toggleViewEdit: () => void;
+  toggleViewEdit: (isEdit?: boolean) => void;
   clearSelectedNote: () => void;
   searchByTag: () => void;
   searchByText: () => void;
@@ -69,6 +69,12 @@ class Deck extends React.Component<DeckProps, DeckState> {
       });
     this.props.fetchImages();
     this.props.fetchTags();
+
+    const folder = localStorage.getItem('folder');
+
+    if (folder) {
+      this.props.setFolder(folder);
+    }
   }
 
   handleKeyDown(event: any) {
@@ -87,13 +93,42 @@ class Deck extends React.Component<DeckProps, DeckState> {
       event.preventDefault();
       this.props.clearSelectedNote();
       this.props.setFolder('notes');
+      this.props.toggleViewEdit(true);
       const editor = document.querySelector('textarea');
 
       if (editor) {
         editor.value = '';
-        editor.focus();
+        setTimeout(() => { editor.focus(); });
       }
     }
+
+    if (event.ctrlKey && event.key === 'ArrowUp') {
+      this.selectNextNote('up');
+    }
+
+    if (event.ctrlKey && event.key === 'ArrowDown') {
+      this.selectNextNote('down');
+    }
+  }
+
+  selectNextNote(direction: string) {
+    if (!this.props.selectedNote.id) { return; }
+
+    const directionVal = (direction === 'up') ? -1 : 1;
+    const index = this.props.notes.findIndex(n => n.id === this.props.selectedNote.id);
+    let nextNote = this.props.notes[index + directionVal];
+
+    if (!nextNote) {
+      if (directionVal === 1) {
+        nextNote = this.props.notes[0];
+      } else {
+        nextNote = this.props.notes[this.props.notes.length - 1];
+      }
+    }
+
+    if (!nextNote) { return; }
+
+    this.props.fetchNote(nextNote.id);
   }
 
   render() {

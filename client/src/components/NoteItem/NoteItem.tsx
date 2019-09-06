@@ -66,6 +66,22 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
     this.props.searchByTag(tag);
   }
 
+  parseText() {
+    const text = this.props.data.text;
+    const lines: any = text.split('\n').slice(0, 5);
+
+    lines.forEach((line: any, index: number) => {
+      if (line.startsWith('# ')) {
+        const content = line.substr(2);
+        lines[index] = <div className="item-text-marker" key={index}>{content}</div>;
+      } else {
+        lines[index] = <div key={index}>{line || ' '}</div>;
+      }
+    });
+
+    return lines;
+  }
+
   render() {
     return (
       <div className={"item-container " + this.getSelectedClass()}>
@@ -73,7 +89,7 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
           className="item-left-col"
           onClick={this.onSelectNote}>
           <div className="item-text">
-            {this.props.data.text}
+            {this.parseText()}
           </div>
           <div className="item-tag-list">
             {this.props.data.tags.map((tag: Tag, index: number) => (

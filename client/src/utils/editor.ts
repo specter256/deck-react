@@ -3,6 +3,7 @@ export class Editor {
   changeEvent: any = null;
   addUpdNote: any = null;
   toggleViewEdit: any = null;
+  markers = [];
 
   constructor(editor: React.ReactInstance) {
     this.editor = editor as HTMLTextAreaElement;
@@ -22,7 +23,7 @@ export class Editor {
       this.insertChar('  ');
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !event.ctrlKey) {
       event.preventDefault();
       this.setIndentForNewLine();
     }
@@ -31,7 +32,7 @@ export class Editor {
       this.nextMarker();
     }
 
-    if (event.ctrlKey && event.key === 's') {
+    if (event.ctrlKey && ['s', 'Enter'].includes(event.key)) {
       event.preventDefault();
       this.addUpdNote();
     }
@@ -62,17 +63,18 @@ export class Editor {
     const firstChars = prevLine.trim().substr(0, 2);
     this.insertChar("\n");
 
-    if (startPos > -1) {
-      if (['* ', '- '].includes(firstChars)) {
-        let indent = ' '.repeat(startPos);
-        indent += firstChars;
-        this.insertChar(indent);
-      }
+    if (startPos === -1) { return; }
+
+    if (['* ', '- '].includes(firstChars)) {
+      let indent = ' '.repeat(startPos);
+      indent += firstChars;
+      this.insertChar(indent);
     }
   }
 
   public addNewLineAtEnd() {
     const lastChar = this.editor.value.substr(this.editor.value.length - 1);
+
     if (lastChar !== "\n") {
       this.editor.value += "\n";
       this.editor.focus();
@@ -80,6 +82,7 @@ export class Editor {
   }
 
   public nextMarker() {
-
+    const lines = this.editor.value.split('\n');
+    const markers = lines.filter(l => l.startsWith('# '));
   }
 }

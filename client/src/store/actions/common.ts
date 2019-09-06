@@ -9,8 +9,8 @@ export const setFolder = (folder: string) => (dispatch: any) => {
   dispatch({ type: 'SET_FOLDER', folder });
 };
 
-export const toggleViewEdit = () => (dispatch: any) => {
-  dispatch({ type: 'TOGGLE_VIEW_EDIT' });
+export const toggleViewEdit = (isEdit?: boolean) => (dispatch: any) => {
+  dispatch({ type: 'TOGGLE_VIEW_EDIT', isEdit });
 };
 
 export const searchByTag = (tag: Tag) => (dispatch: any) => {

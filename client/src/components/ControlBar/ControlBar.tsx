@@ -8,7 +8,7 @@ import './ControlBar.scss';
 type ControlBarProps = {
   addNote: () => void;
   updNote: () => void;
-  toggleViewEdit: () => void;
+  toggleViewEdit: (isEdit?: boolean) => void;
   clearSelectedNote: () => void;
   searchByText: (text?: string) => void;
   setFolder: (folder: string) => void;
@@ -33,11 +33,12 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
   onNewNote() {
     this.props.clearSelectedNote();
     this.props.setFolder('notes');
+    this.props.toggleViewEdit(true);
     const editor = document.querySelector('textarea');
 
     if (editor) {
       editor.value = '';
-      editor.focus();
+      setTimeout(() => { editor.focus(); });
     }
   }
 

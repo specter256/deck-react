@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   folder: 'notes',
-  editMode: true,
+  editMode: false,
   search: {
     tag: null,
     text: null,
@@ -17,6 +17,8 @@ const initialState = {
 export const common = (state = initialState, action: any) => {
   switch(action.type) {
     case SET_FOLDER:
+      localStorage.setItem('folder', action.folder);;
+
       return {
         ...state,
         folder: action.folder
@@ -25,7 +27,7 @@ export const common = (state = initialState, action: any) => {
     case TOGGLE_VIEW_EDIT:
       return {
         ...state,
-        editMode: !state.editMode
+        editMode: action.isEdit !== undefined ? action.isEdit : !state.editMode
       };
 
       case SEARCH_BY_TAG:
