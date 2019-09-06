@@ -28,9 +28,7 @@ function handleErrors(response: any) {
 }
 
 const del = async (data: any) => {
-  const response = await axios.delete('api/notes/del', {
-    data: data
-  });
+  const response = await axios.delete('api/notes/del', { data });
   const res = await handleErrors(response);
   return res.data;
 }

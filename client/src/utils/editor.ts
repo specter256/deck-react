@@ -24,12 +24,13 @@ export class Editor {
     if (event.key === 'Enter') {
       event.preventDefault();
       this.setIndentForNewLine();
-      this.changeEvent();
     }
 
     if (event.ctrlKey && event.key === ']') {
       this.nextMarker();
     }
+
+    this.changeEvent();
   }
 
   public insertChar(char: string): void {

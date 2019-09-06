@@ -25,6 +25,9 @@ type NoteContentProps = {
   toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: () => void;
+  delImage: (id: number) => Promise<void>;
+  setFolder: (folder: string) => void;
+  fetchImages: () => Promise<any[]>;
   folder: string;
   editMode: boolean;
   selectedNote: Note;
@@ -265,7 +268,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               updNote={this.updNote}
               toggleViewEdit={this.props.toggleViewEdit}
               editMode={this.props.editMode}
-              searchByText={this.props.searchByText}/>
+              searchByText={this.props.searchByText}
+              setFolder={this.props.setFolder}/>
             <div style={{ height: '100%' }}>
               <div className={"editor-folder " + this.isFolderHidden('notes')}>
                 { selectTag }
@@ -274,7 +278,9 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               </div>
               <div className={"images-folder " + this.isFolderHidden('images')}>
                 <Images
-                  images={this.props.images}/>
+                  images={this.props.images}
+                  fetchImages={this.props.fetchImages}
+                  delImage={this.props.delImage}/>
               </div>
             </div>
           </SplitPane>

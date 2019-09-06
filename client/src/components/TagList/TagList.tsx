@@ -16,6 +16,7 @@ type TagListProps = {
   fetchImages: () => Promise<any[]>;
   tags: Tag[];
   searchTag: Tag;
+  folder: string;
 }
 
 type TagListState = {
@@ -82,10 +83,10 @@ export default class TagList extends React.Component<TagListProps, TagListState>
             onKeyDown={this.handleKeyDown}/>
         </div>
         <ul>
-          <li className="fixed">
+          <li className={`fixed ${this.props.folder === 'notes' ? 'selected' : ''}`}>
             <MdNote/><button onClick={() => this.showNotes()}>Notes</button>
           </li>
-          <li className="fixed">
+          <li className={`fixed ${this.props.folder === 'images' ? 'selected' : ''}`}>
             <MdImage/><button onClick={() => this.showImages()}>Images</button>
           </li>
         </ul>

@@ -40,7 +40,7 @@ router.post('/add', async (req, res) => {
   note.tags = parseTags(data.tags);
   await getConnection().manager.save(note);
 
-  res.json({status: 200});
+  res.status(200).send({status: 200});
 });
 
 router.post('/upd', async (req, res) => {
@@ -53,7 +53,7 @@ router.post('/upd', async (req, res) => {
   note.tags = parseTags(data.tags);
   await getConnection().manager.save(note);
 
-  res.json({status: 200});
+  res.status(200).send({status: 200});
 });
 
 router.delete('/del', async (req, res) => {
@@ -66,7 +66,7 @@ router.delete('/del', async (req, res) => {
     .where('id = :id', { id: data.id })
     .execute();
 
-  res.json({status: 200});
+  res.status(200).send({status: 200});
 });
 
 const parseTags = (data: any) => {

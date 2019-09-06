@@ -63,6 +63,15 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 router.delete('/del', async (req, res) => {
   const data = req.body;
 
+  const img = await getRepository(Image)
+    .createQueryBuilder('image')
+    .where('image.id = :id', { id: data.id })
+    .getOne();
+
+  if (img === undefined) {
+    return res.status(404).send({status: 404});
+  }
+
   await getConnection()
     .createQueryBuilder()
     .delete()
@@ -70,7 +79,15 @@ router.delete('/del', async (req, res) => {
     .where('id = :id', { id: data.id })
     .execute();
 
-  res.json({status: 200});
+  const filePath = path.join(imagesDir, img.filename);
+
+  if (fs.existsSync(filePath)) {
+    fs.unlink(filePath, (err) => {
+      if (err) { console.log(err); }
+    });
+  }
+
+  res.status(200).send({status: 200});
 });
 
 export default router;

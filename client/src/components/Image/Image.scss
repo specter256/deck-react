@@ -1,17 +1,3 @@
-.images-container {
-  height: 100%;
-  overflow: auto;
-}
-
-.images-container::-webkit-scrollbar {
-  width: 6px;
-  background-color: var(--b_dark);
-}
-
-.images-container::-webkit-scrollbar-thumb {
-  background-color: var(--b_light);
-}
-
 .img-wrap {
   &:hover .close-icon {
     visibility: visible;

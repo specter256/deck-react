@@ -11,6 +11,7 @@ import { fetchTags } from 'store/reducers/tags/fetch_tags';
 import { addTag } from 'store/reducers/tags/add_tag';
 import { delTag } from 'store/reducers/tags/del_tag';
 import { fetchImages } from 'store/reducers/images/fetch_images';
+import { delImage } from 'store/reducers/images/del_image';
 import { common } from 'store/reducers/common';
 
 export const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
   addTag,
   delTag,
   fetchImages,
+  delImage,
   common,
 });
 

@@ -24,6 +24,7 @@ export const fetchImages = (state = initialState, action: any) => {
       const images: any = [];
       action.payload.images.forEach((image: Image) => {
         images.push({
+          id: image.id,
           src: `api/images/${image.filename}`,
           width: 1,
           height: 1,

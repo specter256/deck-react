@@ -11,6 +11,7 @@ type ControlBarProps = {
   toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: (text?: string) => void;
+  setFolder: (folder: string) => void;
   editMode: boolean;
   selectedNote: Note;
 }
@@ -31,6 +32,7 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
 
   onNewNote() {
     this.props.clearSelectedNote();
+    this.props.setFolder('notes');
   }
 
   onSaveNote() {

@@ -20,6 +20,7 @@ import { fetchNote, clearSelectedNote } from 'store/actions/notes/fetch_note';
 import { getFilteredNotes } from 'store/selectors/index';
 import { setFolder, toggleViewEdit, searchByTag, searchByText } from 'store/actions/common';
 import { fetchImages } from 'store/actions/images/fetch_images';
+import { delImage } from 'store/actions/images/del_image';
 
 import './Deck.scss';
 
@@ -38,6 +39,7 @@ type DeckProps = {
   searchByText: () => void;
   setFolder: () => void;
   fetchImages: () => Promise<any[]>;
+  delImage: () => Promise<void>;
   folder: string;
   editMode: boolean;
   selectedNote: Note;
@@ -82,6 +84,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
             searchByTag={this.props.searchByTag}
             searchTag={this.props.searchTag}
             setFolder={this.props.setFolder}
+            folder={this.props.folder}
             fetchImages={this.props.fetchImages}/>
           <SplitPane
             split="vertical"
@@ -108,7 +111,10 @@ class Deck extends React.Component<DeckProps, DeckState> {
               addNote={this.props.addNote}
               updNote={this.props.updNote}
               editMode={this.props.editMode}
-              images={this.props.images}/>
+              images={this.props.images}
+              fetchImages={this.props.fetchImages}
+              delImage={this.props.delImage}
+              setFolder={this.props.setFolder}/>
           </SplitPane>
         </SplitPane>
       </div>
@@ -141,6 +147,7 @@ const mapDispatchToProps = {
   searchByText,
   setFolder,
   fetchImages,
+  delImage,
  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deck);

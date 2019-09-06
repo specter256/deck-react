@@ -26,7 +26,7 @@
     color: var(--text_2);
   }
 
-  &:hover {
+  &:hover, &.selected {
     color: var(--text_2);
     background-color: var(--p1_secondary);
   }

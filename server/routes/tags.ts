@@ -29,7 +29,7 @@ router.post('/add', async (req, res) => {
     }])
     .execute();
 
-  res.json({status: 200});
+    res.status(200).send({status: 200});
 });
 
 router.delete('/del', async (req, res) => {
@@ -42,7 +42,7 @@ router.delete('/del', async (req, res) => {
     .where('id = :id', { id: data.id })
     .execute();
 
-  res.json({status: 200});
+    res.status(200).send({status: 200});
 });
 
 export default router;
