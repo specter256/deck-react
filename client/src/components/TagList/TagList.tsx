@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdNote, MdImage, MdDelete, MdClose } from "react-icons/md";
+import { MdNote, MdImage, MdDelete, MdClose } from 'react-icons/md';
 import FlipMove from 'react-flip-move';
 
 import { Tag, Note } from 'interfaces/interfaces';
@@ -55,10 +55,11 @@ export default class TagList extends React.Component<TagListProps, TagListState>
     this.props.searchByTag(tag);
   }
 
-  onDelTag(id: number) {
+  onDelTag(e: any, id: number) {
+    e.stopPropagation();
     this.props.delTag({ id })
       .then((res: any) => {
-        if (res.status === 200) {
+        if (res && res.status === 200) {
           this.props.fetchTags();
         }
       });
@@ -83,21 +84,30 @@ export default class TagList extends React.Component<TagListProps, TagListState>
             onKeyDown={this.handleKeyDown}/>
         </div>
         <ul>
-          <li className={`fixed ${this.props.folder === 'notes' ? 'selected' : ''}`}>
-            <MdNote/><button onClick={() => this.showNotes()}>Notes</button>
+          <li
+            className={`fixed ${this.props.folder === 'notes' ? 'selected' : ''}`}
+            onClick={() => this.showNotes()}
+          >
+            <MdNote/><span>Notes</span>
           </li>
-          <li className={`fixed ${this.props.folder === 'images' ? 'selected' : ''}`}>
-            <MdImage/><button onClick={() => this.showImages()}>Images</button>
+          <li
+            className={`fixed ${this.props.folder === 'images' ? 'selected' : ''}`}
+            onClick={() => this.showImages()}
+          >
+            <MdImage/><span>Images</span>
           </li>
         </ul>
         {searchTag ? searchTagBadge : ''}
         <ul className="tags-container">
           <FlipMove duration={150} easing="ease-out">
             {this.props.tags.map((tag: Tag, index: number) => (
-              <li key={index}>
-                <button onClick={() => this.searchByTag(tag)}>{tag.name}</button>
+              <li
+                key={index}
+                onClick={() => this.searchByTag(tag)}
+              >
+                <span>{tag.name}</span>
                 <div className="tag-del">
-                  <MdDelete onClick={() => this.onDelTag(tag.id)}/>
+                  <MdDelete onClick={(e) => this.onDelTag(e, tag.id)}/>
                 </div>
               </li>
             ))}

@@ -1,10 +1,11 @@
 export class Editor {
   editor: HTMLTextAreaElement;
-  changeEvent: () => void;
+  changeEvent: any = null;
+  addUpdNote: any = null;
+  toggleViewEdit: any = null;
 
-  constructor(editor: React.ReactInstance, changeEvent: () => void) {
+  constructor(editor: React.ReactInstance) {
     this.editor = editor as HTMLTextAreaElement;
-    this.changeEvent = changeEvent;
   }
 
   public getValue(): string {
@@ -28,6 +29,11 @@ export class Editor {
 
     if (event.ctrlKey && event.key === ']') {
       this.nextMarker();
+    }
+
+    if (event.ctrlKey && event.key === 's') {
+      event.preventDefault();
+      this.addUpdNote();
     }
 
     this.changeEvent();

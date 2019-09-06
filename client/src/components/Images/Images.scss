@@ -11,28 +11,3 @@
 .images-container::-webkit-scrollbar-thumb {
   background-color: var(--b_light);
 }
-
-.img-wrap {
-  &:hover .close-icon {
-    visibility: visible;
-    opacity: 0.5;
-  }
-}
-
-.img-wrap .close-icon {
-  visibility: hidden;
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  z-index: 100;
-  font-size: 24px;
-  color: white;
-  background: rgba(0,0,0,0.5);
-  width: 20px;
-  height: 20px;
-  text-align: center;
-
-  &:hover {
-    opacity: 1;
-  }
-}

@@ -7,7 +7,7 @@ import './NoteItem.scss';
 
 type NoteItemProps = {
   fetchNotes: () => Promise<Note[]>;
-  fetchNote: (id: number) => Promise<void>;
+  fetchNote: (id: number) => Promise<Note>;
   delNote: (id: number) => void;
   searchByTag: (tag?: Tag) => void;
   setFolder: (folder: string) => void;
@@ -67,17 +67,6 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
   }
 
   render() {
-    const delIcon =
-      <div className="item-del">
-        <MdDelete onClick={this.onShowDelConfirm}/>
-      </div>
-
-    const delConfirmIcons =
-      <div className="item-del-confirm">
-        <MdCheck onClick={this.onDelNote}/>
-        <MdClose onClick={this.onHideDelConfirm}/>
-      </div>
-
     return (
       <div className={"item-container " + this.getSelectedClass()}>
         <div
@@ -101,8 +90,14 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
           </div>
         </div>
         <div className="item-right-col">
-          {this.state.showDelConfirm === false ? delIcon : null}
-          {this.state.showDelConfirm === true ? delConfirmIcons : null}
+          <div className={`item-del ${this.state.showDelConfirm === true ? 'hidden' : ''}`}>
+            <MdDelete onClick={this.onShowDelConfirm}/>
+          </div>
+
+          <div className={`item-del-confirm ${this.state.showDelConfirm === false ? 'hidden' : ''}`}>
+            <MdCheck onClick={this.onDelNote}/>
+            <MdClose onClick={this.onHideDelConfirm}/>
+          </div>
         </div>
       </div>
     );

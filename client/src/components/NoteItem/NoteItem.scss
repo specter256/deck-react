@@ -7,8 +7,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  opacity: .5;
 
   &:hover, &.selected {
+    opacity: 1;
     cursor: pointer;
     background-color: var(--p2_secondary);
     -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);

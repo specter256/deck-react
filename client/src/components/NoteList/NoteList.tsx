@@ -8,7 +8,8 @@ import { Note, Tag } from 'interfaces/interfaces';
 
 type NoteListProps = {
   fetchNotes: () => Promise<Note[]>;
-  fetchNote: (id: number) => Promise<void>;
+  fetchNote: (id: number) => Promise<Note>;
+  clearSelectedNote: () => void;
   delNote: (data: any) => Promise<any>;
   searchByTag: (tag?: Tag) => void;
   setFolder: (folder: string) => void;
@@ -29,8 +30,9 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
     const data = { id };
     this.props.delNote(data)
       .then((res) => {
-        if (res.status === 200) {
+        if (res && res.status === 200) {
           this.props.fetchNotes();
+          this.props.clearSelectedNote();
         }
       });
   }

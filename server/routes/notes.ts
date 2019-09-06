@@ -38,16 +38,25 @@ router.post('/add', async (req, res) => {
   note.create_date = currentDate;
   note.update_date = currentDate;
   note.tags = parseTags(data.tags);
-  await getConnection().manager.save(note);
+  const savedNote = await getConnection().manager.save(note);
 
-  res.status(200).send({status: 200});
+  res.status(200).send({
+    status: 200,
+    id: savedNote.id
+  });
 });
 
 router.post('/upd', async (req, res) => {
   const data = req.body;
   const currentDate = Utils.getCurrentDate();
 
-  const note = await getRepository(Note).findOneOrFail(data.id);
+  const note = await getRepository(Note)
+    .findOne(data.id);
+
+  if (note === undefined) {
+    return res.status(404).send({status: 404});
+  }
+
   note.text = data.text;
   note.update_date = currentDate;
   note.tags = parseTags(data.tags);

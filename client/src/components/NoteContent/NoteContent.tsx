@@ -22,6 +22,7 @@ type NoteContentProps = {
   addNote: (data: any) => Promise<any>;
   updNote: (data: any) => Promise<any>;
   fetchNotes: () => Promise<Note[]>;
+  fetchNote: (id: number) => Promise<Note>;
   toggleViewEdit: () => void;
   clearSelectedNote: () => void;
   searchByText: () => void;
@@ -74,9 +75,37 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       return state.fetchTags.items;
     }
 
-    this.editor = new Editor(this.refs.editor, this.handleChangeEditor);
+    this.editor = new Editor(this.refs.editor);
+    this.editor.changeEvent = this.handleChangeEditor;
+    this.editor.addUpdNote = () => { this.addUpdNote(); };
+    this.editor.toggleViewEdit = () => { this.props.toggleViewEdit(); };
+
     this.observeStore(store, selectedItemSelector, this.onChangeSelectedItem);
     this.observeStore(store, tagsSelector, this.onChangeTags);
+  }
+
+  observeStore(store: any, select: any, onChange: any) {
+    let currentState: any;
+
+    function handleChange() {
+      let nextState = select(store.getState());
+      if (nextState !== currentState) {
+        currentState = nextState;
+        onChange(currentState);
+      }
+    }
+
+    let unsubscribe = store.subscribe(handleChange);
+    handleChange();
+    return unsubscribe;
+  }
+
+  addUpdNote() {
+    if (this.props.selectedNote) {
+      this.updNote();
+    } else {
+      this.addNote();
+    }
   }
 
   onChangeTags(currState: any) {
@@ -124,22 +153,6 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
     return tags;
   }
 
-  observeStore(store: any, select: any, onChange: any) {
-    let currentState: any;
-
-    function handleChange() {
-      let nextState = select(store.getState());
-      if (nextState !== currentState) {
-        currentState = nextState;
-        onChange(currentState);
-      }
-    }
-
-    let unsubscribe = store.subscribe(handleChange);
-    handleChange();
-    return unsubscribe;
-  }
-
   addNote() {
     this.editor.addNewLineAtEnd();
 
@@ -150,8 +163,14 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
 
     this.props.addNote(data)
       .then((res) => {
-        if (res.status === 200) {
+        if (res && res.status === 200) {
           this.props.fetchNotes();
+          this.props.fetchNote(res.id)
+            .then((note?: Note) => {
+              this.setState({
+                selectedNote: note,
+              });
+            });
         }
       });
   }
@@ -169,7 +188,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
 
       this.props.updNote(data)
         .then((res) => {
-          if (res.status === 200) {
+          if (res && res.status === 200) {
             this.props.fetchNotes();
           }
         });

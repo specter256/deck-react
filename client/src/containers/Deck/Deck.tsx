@@ -26,7 +26,7 @@ import './Deck.scss';
 
 type DeckProps = {
   fetchNotes: () => Promise<Note[]>;
-  fetchNote: (id: number) => Promise<void>;
+  fetchNote: (id: number) => Promise<Note>;
   addNote: () => Promise<void>;
   updNote: () => Promise<void>;
   delNote: () => Promise<void>;
@@ -37,7 +37,7 @@ type DeckProps = {
   clearSelectedNote: () => void;
   searchByTag: () => void;
   searchByText: () => void;
-  setFolder: () => void;
+  setFolder: (folder: string) => void;
   fetchImages: () => Promise<any[]>;
   delImage: () => Promise<void>;
   folder: string;
@@ -54,8 +54,13 @@ type DeckState = {}
 class Deck extends React.Component<DeckProps, DeckState> {
   constructor(props: any) {
     super(props);
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
     Themes.init();
     ImageUploader.init(this.props.fetchImages);
+    document.addEventListener('keydown', this.handleKeyDown);
+
     this.props.fetchNotes()
       .then((notes: Note[]) => {
         if (notes.length > 0) {
@@ -64,6 +69,31 @@ class Deck extends React.Component<DeckProps, DeckState> {
       });
     this.props.fetchImages();
     this.props.fetchTags();
+  }
+
+  handleKeyDown(event: any) {
+    const target = event.target || event.srcElement;
+
+    if (/INPUT|TEXTAREA|SELECT|BUTTON/.test(target.nodeName) ) {
+      return;
+    }
+
+    if (event.key === 'e') {
+      event.preventDefault();
+      this.props.toggleViewEdit();
+    }
+
+    if (event.key === 'c') {
+      event.preventDefault();
+      this.props.clearSelectedNote();
+      this.props.setFolder('notes');
+      const editor = document.querySelector('textarea');
+
+      if (editor) {
+        editor.value = '';
+        editor.focus();
+      }
+    }
   }
 
   render() {
@@ -95,6 +125,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
             <NoteList
               notes={this.props.notes}
               selectedNote={this.props.selectedNote}
+              clearSelectedNote={this.props.clearSelectedNote}
               fetchNotes={this.props.fetchNotes}
               fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}
@@ -107,6 +138,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}
               fetchNotes={this.props.fetchNotes}
+              fetchNote={this.props.fetchNote}
               searchByText={this.props.searchByText}
               addNote={this.props.addNote}
               updNote={this.props.updNote}

@@ -33,6 +33,12 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
   onNewNote() {
     this.props.clearSelectedNote();
     this.props.setFolder('notes');
+    const editor = document.querySelector('textarea');
+
+    if (editor) {
+      editor.value = '';
+      editor.focus();
+    }
   }
 
   onSaveNote() {

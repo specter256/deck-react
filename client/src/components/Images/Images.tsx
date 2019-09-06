@@ -18,7 +18,7 @@ export default class Images extends React.Component<ImagesProps, ImagesState> {
     const data = { id };
     this.props.delImage(data)
       .then((res) => {
-        if (res.status === 200) {
+        if (res && res.status === 200) {
           this.props.fetchImages();
         }
       });
