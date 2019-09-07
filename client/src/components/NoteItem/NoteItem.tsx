@@ -74,6 +74,8 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
       if (line.startsWith('# ')) {
         const content = line.substr(2);
         lines[index] = <div className="item-text-marker" key={index}>{content}</div>;
+      } else if (line.trim() === '---') {
+        lines[index] = <div key={index}><hr/></div>;
       } else {
         lines[index] = <div key={index}>{line || ' '}</div>;
       }

@@ -233,6 +233,7 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
       <textarea
         className={this.isEditorHidden()}
         ref="editor"
+        onChange={this.handleChangeEditor}
         onKeyDown={this.handleKeyDownEditor}>
       </textarea>
 

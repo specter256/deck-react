@@ -16,6 +16,10 @@
 
 .preview-container {
   height: 100%;
+
+  h1 {
+    color: var(--p3_accent);
+  }
 }
 
 #note-content-wrap {

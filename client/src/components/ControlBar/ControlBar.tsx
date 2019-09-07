@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { MdSave, MdAddBox } from 'react-icons/md';
+import { MdSave, MdAddBox, MdPageview, MdEdit } from 'react-icons/md';
 
 import { Note } from 'interfaces/interfaces';
 
@@ -63,7 +63,7 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
       <div className="control-bar">
         <button
           onClick={this.toggleViewEdit}>
-          {this.props.editMode ? 'View' : 'Edit'}
+          {this.props.editMode ? <MdPageview/> : <MdEdit/>}
         </button>
         <button
           onClick={this.onNewNote}

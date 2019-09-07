@@ -1,4 +1,23 @@
 export class Themes {
+  static default = {
+    p1_accent: '#49348c',
+    p1_borders: '#333333',
+    p1_primary: '#1b1b1b',
+    p1_secondary: '#333333',
+    p2_accent: '#F27280',
+    p2_borders: '#333333',
+    p2_primary: '#1f1f1f',
+    p2_secondary: '#1b1b1b',
+    p3_accent: '#F27280',
+    p3_borders: '#333333',
+    p3_primary: '#1b1b1b',
+    p3_secondary: '#1f1f1f',
+    text_1: '#4B7676',
+    text_2: '#9fafaf',
+    text_3: '#D2D2D2',
+    text_4: '#D2D2D2',
+  };
+
   static init() {
     document.body.addEventListener('dragover', (event: DragEvent) => {
       event.stopPropagation();
@@ -15,11 +34,15 @@ export class Themes {
   };
 
   static apply() {
+    let theme;
     let themeStr = localStorage.getItem('theme');
 
-    if (!themeStr || !this.isJSON(themeStr)) { return; }
+    if (!themeStr || !this.isJSON(themeStr)) {
+      theme = this.default;
+    } else {
+      theme = JSON.parse(themeStr);
+    }
 
-    const theme = JSON.parse(themeStr);
 
     if (theme === null) { return; }
 

@@ -8549,6 +8549,11 @@ react-select@^3.0.4:
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
 
+react-simple-image-viewer@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-simple-image-viewer/-/react-simple-image-viewer-0.0.3.tgz#e50f63882e92caabc966911f96a7ed49cdb7d3fe"
+  integrity sha512-WfLdYCo4nS0PmnqEjtoLDWQQkBBye28Sun2dBlc3TrEVX+ai4GTzj0f27y1LrEF6b6HMliRbl7LX+dqfDi/NMg==
+
 react-split-pane@^0.1.87:
   version "0.1.87"
   resolved "https://registry.yarnpkg.com/react-split-pane/-/react-split-pane-0.1.87.tgz#a7027ae554abfacca35f5f780288b07fe4ec4cbd"
