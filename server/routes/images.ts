@@ -5,11 +5,12 @@ import multer from 'multer';
 import mime from 'mime-types';
 import fs from 'fs';
 
+import { config } from '../config';
 import { Image } from '../entity/image';
 import Utils from '../utils/utils';
 
 const router: express.Router = express.Router();
-const imagesDir = path.join(__dirname, '../database/images');
+const imagesDir = path.join(config.storagePath, 'images');
 const storage = multer.diskStorage({
   destination: imagesDir,
   filename: function (req, file, callback) {

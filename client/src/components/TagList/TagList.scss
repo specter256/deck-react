@@ -18,9 +18,10 @@
   font-size: 14px;
   list-style-type: none;
   color: var(--text_1);
-  padding: 4px 0;
+  padding: 4px;
   display: flex;
   cursor: pointer;
+  margin-bottom: 2px;
 
   &:hover .fixed svg {
     color: var(--text_2);
@@ -85,7 +86,6 @@
 }
 
 .search-tag-badge {
-  border-radius: 10px;
   background: var(--p1_secondary);
   border: 1px solid var(--p1_secondary);
   margin: 10px;

@@ -2,7 +2,6 @@
   "skip": false,
   "name": "default",
   "type": "sqlite",
-  "database": "database/storage.db",
   "entities": ["entity/*.ts"],
   "logging": true,
   "synchronize": true

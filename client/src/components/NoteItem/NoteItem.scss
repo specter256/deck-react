@@ -48,7 +48,7 @@
   color: var(--text_2);
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .item-text-marker {

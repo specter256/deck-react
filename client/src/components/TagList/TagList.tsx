@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdNote, MdImage, MdDelete, MdClose } from 'react-icons/md';
+import { MdNote, MdImage, MdDelete, MdClose, MdLocalOffer } from 'react-icons/md';
 import FlipMove from 'react-flip-move';
 
 import { Tag, Note } from 'interfaces/interfaces';
@@ -70,6 +70,7 @@ export default class TagList extends React.Component<TagListProps, TagListState>
 
     const searchTagBadge =
       <div className="search-tag-badge" onClick={() => this.searchByTag()}>
+        <MdLocalOffer style={{ fontSize: '24px', paddingRight: '6px' }}/>
         <span className="label">{searchTag ? searchTag.name : ''}</span>
         <MdClose/>
       </div>
