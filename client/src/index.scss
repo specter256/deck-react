@@ -59,3 +59,15 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
+
+code {
+  background-color: var(--p1_secondary);
+  padding: 2px;
+  border-radius: 4px;
+  color: var(--text_4);
+
+  &:hover {
+    background-color: var(--p1_accent);
+    cursor: pointer;
+  }
+}
