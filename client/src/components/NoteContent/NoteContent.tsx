@@ -258,16 +258,16 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
           borderRadius: 0,
           colors: {
             ...theme.colors,
-            neutral0: 'var(--p3_secondary)',  // combo background
-            neutral20: 'var(--p3_secondary)', // combo border
-            neutral30: 'var(--p3_secondary)', // combo border on hover
-            primary: 'var(--p3_secondary)',   // combo border on focus
-            primary25: 'var(--p3_borders)',   // combo item background on hover
-            primary50: 'var(--p3_borders)',   // combo item background on click
-            danger: 'var(--p3_accent)',       // delete icon on hover
-            dangerLight: 'var(--p3_borders)', // delete button background on hover
-            neutral10: 'var(--p3_borders)',   // selected tag background
-            neutral80: 'var(--text_2)',       // combo text color
+            neutral0: 'var(--background_high)', // combo background
+            neutral20: 'var(--border_high)',    // combo border
+            neutral30: 'var(--border_low)',     // combo border on hover
+            primary: 'var(--background_med)',   // combo border on focus
+            primary25: 'var(--background_med)', // combo item background on hover
+            primary50: 'var(--background_low)', // combo item background on click
+            danger: 'var(--accent)',            // delete icon on hover
+            dangerLight: 'var(--border_low)',   // delete button background on hover
+            neutral10: 'var(--background_med)', // selected tag background
+            neutral80: 'var(--foreground_low)', // combo text color
           },
         })}/>
 
@@ -280,7 +280,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
             minSize={75}
             defaultSize={75}
             resizerStyle={{ background: 'none' }}
-            pane2Style={{ overflow: 'auto' }}>
+            pane2Style={{ overflow: 'auto' }}
+          >
             <ControlBar
               selectedNote={this.props.selectedNote}
               clearSelectedNote={this.props.clearSelectedNote}
@@ -289,7 +290,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
               toggleViewEdit={this.props.toggleViewEdit}
               editMode={this.props.editMode}
               searchByText={this.props.searchByText}
-              setFolder={this.props.setFolder}/>
+              setFolder={this.props.setFolder}
+            />
             <div style={{ height: '100%' }}>
               <div className={"editor-folder " + this.isFolderHidden('notes')}>
                 { selectTag }
@@ -300,7 +302,8 @@ export default class NoteContent extends React.Component<NoteContentProps, NoteC
                 <Images
                   images={this.props.images}
                   fetchImages={this.props.fetchImages}
-                  delImage={this.props.delImage}/>
+                  delImage={this.props.delImage}
+                />
               </div>
             </div>
           </SplitPane>

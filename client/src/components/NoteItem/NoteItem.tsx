@@ -92,7 +92,8 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
       <div className={"item-container " + this.getSelectedClass()}>
         <div
           className="item-left-col"
-          onClick={this.onSelectNote}>
+          onClick={this.onSelectNote}
+        >
           <div className="item-text">
             {this.parseText()}
           </div>
@@ -101,7 +102,8 @@ export default class NoteItem extends React.Component<NoteItemProps, NoteItemSta
               <span
                 className="item-tag"
                 onClick={() => this.searchByTag(tag)}
-                key={index}>
+                key={index}
+              >
                 {tag.name}
               </span>
             ))}

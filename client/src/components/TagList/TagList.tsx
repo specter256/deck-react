@@ -81,7 +81,7 @@ export default class TagList extends React.Component<TagListProps, TagListState>
           <input
             type="text"
             ref={(ref) => this.tagInput = ref}
-            placeholder="Enter new tag..."
+            placeholder="Add new tag..."
             onKeyDown={this.handleKeyDown}/>
         </div>
         <ul>

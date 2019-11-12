@@ -3,10 +3,15 @@
   flex: 1 1;
 }
 
+@font-face {
+  font-family: 'mono';
+  src: url('./assets/mono.ttf');
+ }
+
 :root {
   --font-size: 12px;
   --line-height: 20px;
-  --font-family: monospace;
+  --font-family: mono;
 }
 
 .hidden {
@@ -18,11 +23,11 @@
 }
 
 ::selection {
-  background-color: var(--text_4);
+  background-color: var(--foreground_high);
 }
 
 ::-webkit-scrollbar {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 body {
@@ -32,12 +37,11 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
-  color: var(--text_2);
+  color: var(--foreground_low);
 }
 
 button, span {
   font-family: var(--font-family);
-  color: var(--text_1);
   text-decoration: none;
   background-color: transparent;
   border: none;
@@ -55,19 +59,20 @@ input {
   padding: 5px;
   font-size: 12px;
   font-family: var(--font-family);
-  color: var(--text_2);
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--background_high);
+  color: var(--foreground_med);
 }
 
 code {
-  background-color: var(--p1_secondary);
+  background-color: var(--background_med);
   padding: 2px;
   border-radius: 4px;
-  color: var(--text_4);
+  color: var(--foreground_low);
 
   &:hover {
-    background-color: var(--p1_accent);
+    background-color: var(--accent);
     cursor: pointer;
   }
 }

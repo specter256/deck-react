@@ -1,72 +1,50 @@
 export class Themes {
-  static default = {
-    p1_accent: '#49348c',
-    p1_borders: '#333333',
-    p1_primary: '#1b1b1b',
-    p1_secondary: '#333333',
-    p2_accent: '#F27280',
-    p2_borders: '#333333',
-    p2_primary: '#1f1f1f',
-    p2_secondary: '#1b1b1b',
-    p3_accent: '#F27280',
-    p3_borders: '#333333',
-    p3_primary: '#1b1b1b',
-    p3_secondary: '#1f1f1f',
-    text_1: '#4B7676',
-    text_2: '#9fafaf',
-    text_3: '#D2D2D2',
-    text_4: '#D2D2D2',
+  static day = {
+    background_high: '#fff',
+    background_med: '#e2e2e2',
+    background_low: '#cdcdcd',
+    foreground_high: '#ccc',
+    foreground_med: '#777',
+    foreground_low: '#303030',
+    border_high: '#d9d9d9',
+    border_low: '#a6a6a6',
+    accent: '#f27280',
+  };
+
+  static night = {
+    background_high: '#1f1f1f',
+    background_med: '#1b1b1b',
+    background_low: '#2c2c2c',
+    foreground_high: '#D2D2D2',
+    foreground_med: '#4B7676',
+    foreground_low: '#D2D2D2',
+    border_high: '#2d2d2d',
+    border_low: '#2a2a2a',
+    accent: '#f27280',
   };
 
   static init() {
-    document.body.addEventListener('dragover', (event: DragEvent) => {
-      event.stopPropagation();
-      event.preventDefault();
-    });
-
-    document.body.addEventListener('drop', (event: DragEvent) => {
-      event.stopPropagation();
-      event.preventDefault();
-      this.load(event);
-    });
-
     this.apply();
   };
 
   static apply() {
-    let theme;
-    let themeStr = localStorage.getItem('theme');
-
-    if (!themeStr || !this.isJSON(themeStr)) {
-      theme = this.default;
-    } else {
-      theme = JSON.parse(themeStr);
-    }
-
-
-    if (theme === null) { return; }
-
+    const theme = localStorage.getItem('theme') || 'night';
+    const palette = theme === 'night' ? this.night : this.day;
     const style = document.createElement('style');
+
     style.type = 'text/css';
     style.id = 'themeStyle';
     style.innerHTML = `
       :root {
-        --p1_primary: ${theme.p1_primary};
-        --p1_secondary: ${theme.p1_secondary};
-        --p1_borders: ${theme.p1_borders};
-        --p1_accent: ${theme.p1_accent};
-        --p2_primary: ${theme.p2_primary};
-        --p2_secondary: ${theme.p2_secondary};
-        --p2_borders: ${theme.p2_borders};
-        --p2_accent: ${theme.p2_accent};
-        --p3_primary: ${theme.p3_primary};
-        --p3_secondary: ${theme.p3_secondary};
-        --p3_borders: ${theme.p3_borders};
-        --p3_accent: ${theme.p3_accent};
-        --text_1: ${theme.text_1};
-        --text_2: ${theme.text_2};
-        --text_3: ${theme.text_3};
-        --text_4: ${theme.text_4};
+        --background_high: ${palette.background_high};
+        --background_med: ${palette.background_med};
+        --background_low: ${palette.background_low};
+        --foreground_high: ${palette.foreground_high};
+        --foreground_med: ${palette.foreground_med};
+        --foreground_low: ${palette.foreground_low};
+        --border_high: ${palette.border_high};
+        --border_low: ${palette.border_low};
+        --accent: ${palette.accent};
       }
     `;
 
@@ -79,75 +57,15 @@ export class Themes {
     }
   }
 
-  static load(event: DragEvent) {
-    if (event === null || event.dataTransfer === null) { return; }
+  static toggle() {
+    const theme = localStorage.getItem('theme') || 'night';
 
-    const file = event.dataTransfer.files[0];
-
-    if (!file || file.type !== 'image/svg+xml') {
-      return;
+    if (theme === 'night') {
+      localStorage.setItem('theme', 'day');
+    } else {
+      localStorage.setItem('theme', 'night');
     }
 
-    const reader = new FileReader();
-
-    reader.onload = (e: Event) => {
-      const json = this.parse(reader.result);
-      localStorage.setItem('theme', JSON.stringify(json));
-      this.apply();
-    };
-
-    if (file) {
-      reader.readAsText(file);
-    }
-  }
-
-  static parse(str: any) {
-    if (str === null) { return; }
-
-    const parser = new DOMParser();
-    const svg = parser.parseFromString(str, 'image/svg+xml');
-
-    if (svg === null) { return; }
-
-    const elements = [
-      'p1_primary',
-      'p1_secondary',
-      'p1_borders',
-      'p1_accent',
-      'p2_primary',
-      'p2_secondary',
-      'p2_borders',
-      'p2_accent',
-      'p3_primary',
-      'p3_secondary',
-      'p3_borders',
-      'p3_accent',
-      'text_1',
-      'text_2',
-      'text_3',
-      'text_4',
-    ];
-
-    const json: any = {};
-
-    for (const el of elements) {
-      const svgEl = svg.getElementById(el);
-
-      if (svgEl) {
-        json[el] = svgEl.getAttribute('fill');
-      }
-    }
-
-    return json;
-  }
-
-  static isJSON(str: string) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-
-    return true;
+    this.apply();
   }
 };

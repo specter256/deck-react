@@ -139,7 +139,7 @@ class Deck extends React.Component<DeckProps, DeckState> {
           minSize={200}
           defaultSize={200}
           allowResize={false}
-          resizerStyle={{ background: 'var(--p1_primary)' }}>
+        >
           <TagList
             tags={this.props.tags}
             fetchTags={this.props.fetchTags}
@@ -150,13 +150,15 @@ class Deck extends React.Component<DeckProps, DeckState> {
             searchTag={this.props.searchTag}
             setFolder={this.props.setFolder}
             folder={this.props.folder}
-            fetchImages={this.props.fetchImages}/>
+            fetchImages={this.props.fetchImages}
+          />
           <SplitPane
             split="vertical"
             minSize={300}
             defaultSize={300}
             allowResize={false}
-            resizerStyle={{ background: 'var(--p2_primary)' }}>
+            resizerStyle={{ background: 'var(--p2_primary)' }}
+          >
             <NoteList
               notes={this.props.notes}
               selectedNote={this.props.selectedNote}
@@ -165,7 +167,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
               fetchNote={this.props.fetchNote}
               delNote={this.props.delNote}
               searchByTag={this.props.searchByTag}
-              setFolder={this.props.setFolder}/>
+              setFolder={this.props.setFolder}
+            />
             <NoteContent
               folder={this.props.folder}
               tags={this.props.tags}
@@ -181,7 +184,8 @@ class Deck extends React.Component<DeckProps, DeckState> {
               images={this.props.images}
               fetchImages={this.props.fetchImages}
               delImage={this.props.delImage}
-              setFolder={this.props.setFolder}/>
+              setFolder={this.props.setFolder}
+            />
           </SplitPane>
         </SplitPane>
       </div>

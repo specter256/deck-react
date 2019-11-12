@@ -1,24 +1,18 @@
 .note-list {
   height: 100vh;
-  background-color: var(--p2_primary);
-  // -webkit-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
-  // -moz-box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
-  // box-shadow: inset -9px 0px 10px -9px rgba(0,0,0,0.75);
+  background-color: var(--background_high);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
-.note-list .Resizer {
-  z-index: 1;
-}
-
 .note-list {
-  color: var(--text_2);
   overflow: auto;
   height: 100%;
   overflow: -moz-scrollbars-none;
+  border-left: 1px solid var(--border_low);
+  border-right: 1px solid var(--border_low);
   -ms-overflow-style: none;
   &::-webkit-scrollbar { width: 0; }
 
@@ -28,11 +22,10 @@
 
   &:hover::-webkit-scrollbar {
     width: 6px;
-    background-color: var(--p2_primary);
     cursor: pointer;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background-color: var(--p2_borders);
+    background-color: var(--border_low);
   }
 }

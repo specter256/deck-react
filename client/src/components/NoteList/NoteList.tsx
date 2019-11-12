@@ -50,7 +50,8 @@ export default class NoteList extends React.Component<NoteListProps, NoteListSta
               fetchNotes={this.props.fetchNotes}
               delNote={this.onDelNote}
               searchByTag={this.props.searchByTag}
-              setFolder={this.props.setFolder}/>
+              setFolder={this.props.setFolder}
+            />
           ))}
         </FlipMove>
       </div>

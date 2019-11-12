@@ -4,7 +4,7 @@
 
 .editor-folder {
   height: 100%;
-  padding: 0 10px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
 }
@@ -16,9 +16,10 @@
 
 .preview-container {
   height: 100%;
+  font-size: 16px;
 
   h1 {
-    color: var(--p3_accent);
+    color: var(--accent);
   }
 }
 
@@ -28,19 +29,18 @@
 
 #note-content {
   height: 100%;
-  background-color: var(--p3_primary);
-  color: var(--text_3);
+  background-color: var(--background_high);
 }
 
 textarea {
   width: 100%;
-  padding: 10px 0;
+  padding: 20px 0;
   box-sizing: border-box;
   resize: none;
-  font-size: 14px;
+  font-size: 16px;
   font-family: var(--font-family);
-  background-color: var(--p3_primary);
-  color: var(--text_3);
+  background-color: var(--background_high);
+  color: var(--foreground_low);
   border: none;
   height: 100%;
   line-height: var(--line-height);
@@ -48,9 +48,9 @@ textarea {
 
 textarea::-webkit-scrollbar {
   width: 6px;
-  background-color: var(--p3_primary);
+  cursor: pointer;
 }
 
 textarea::-webkit-scrollbar-thumb {
-  background-color: var(--p3_borders);
+  background-color: var(--border_low);
 }

@@ -1,6 +1,6 @@
 .control-bar {
   display: flex;
-  padding: 10px;
+  padding: 10px 20px;
   width: 100%;
 }
 
@@ -12,16 +12,15 @@
 .control-bar input {
   height: 100%;
   font-size: 24px;
-  background-color: var(--p3_primary);
-  border: 1px solid var(--p3_borders);
+  border: 1px solid var(--border_low);
 }
 
 .control-bar button {
   padding: 10px;
-  background-color: var(--p3_secondary);
+  background-color: var(--background_med);
   border: none;
   outline: none;
-  color: var(--text_1);
+  color: var(--foreground_med);
   float: left;
   height: 50px;
   width: 50px;
@@ -34,11 +33,10 @@
 }
 
 .control-bar button:hover {
-  background-color: var(--p3_borders);
-  color: var(--text_2);
+  background-color: var(--background_low);
   cursor: pointer;
 }
 
 .control-bar button:active {
-  background-color: var(--p3_secondary);
+  background-color: var(--border_low);
 }

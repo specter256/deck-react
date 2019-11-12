@@ -1,7 +1,8 @@
 import React, { ChangeEvent } from 'react';
-import { MdSave, MdAddBox, MdPageview, MdEdit } from 'react-icons/md';
+import { MdSave, MdAddBox, MdPageview, MdEdit, MdHighlight } from 'react-icons/md';
 
 import { Note } from 'interfaces/interfaces';
+import { Themes } from 'utils/themes';
 
 import './ControlBar.scss';
 
@@ -58,29 +59,44 @@ export default class ControlBar extends React.Component<ControlBarProps, Control
     this.props.searchByText(event.target.value);
   }
 
+  toggleTheme() {
+    Themes.toggle();
+  }
+
   render() {
     return (
       <div className="control-bar">
         <button
-          onClick={this.toggleViewEdit}>
-          {this.props.editMode ? <MdPageview/> : <MdEdit/>}
-        </button>
-        <button
           onClick={this.onNewNote}
-          title="New note">
+          title="New note"
+        >
           <MdAddBox/>
         </button>
         <button
           onClick={this.onSaveNote}
-          title="Save note">
+          title="Save note"
+        >
           <MdSave/>
+        </button>
+        <button
+          onClick={this.toggleViewEdit}
+          title="Toggle edit / preview mode"
+        >
+          {this.props.editMode ? <MdPageview/> : <MdEdit/>}
+        </button>
+        <button
+          onClick={this.toggleTheme}
+          title="Toggle day / night mode"
+        >
+          <MdHighlight/>
         </button>
         <div className="input-container">
           <input
             type="text"
             ref={(ref) => this.searchInput = ref}
             placeholder="Search"
-            onChange={this.handleChangeSearchInput}/>
+            onChange={this.handleChangeSearchInput}
+          />
         </div>
       </div>
     );
