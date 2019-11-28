@@ -2,11 +2,11 @@
   "name": "server",
   "version": "0.1.0",
   "description": "Note app server",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./server.ts",
-    "start": "node server.js"
+    "start": "ts-node ./server.ts"
   },
   "author": "Specter",
   "license": "MIT",
